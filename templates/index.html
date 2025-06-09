@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Coaching Institute - Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    /* Extra inline styles for homepage specific stuff */
+    .hero {
+      background: linear-gradient(135deg, #004080 0%, #66a3ff 100%);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      animation: fadeInDown 1s ease forwards;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 30px;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .btn-primary {
+      background-color: #ffcc00;
+      color: #004080;
+      font-weight: bold;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+      animation: fadeInUp 1.5s ease forwards;
+    }
+
+    .btn-primary:hover {
+      background-color: #e6b800;
+    }
+
+    /* Humanoid tech section */
+    .humanoid-section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      background-color: #f4f7fb;
+      padding: 50px 20px;
+      gap: 40px;
+    }
+
+    .humanoid-text {
+      flex: 1 1 400px;
+      max-width: 500px;
+      animation: slideInLeft 1s ease forwards;
+    }
+
+    .humanoid-text h2 {
+      color: #004080;
+      margin-bottom: 20px;
+    }
+
+    .humanoid-text p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .humanoid-image {
+      flex: 1 1 400px;
+      max-width: 500px;
+      animation: slideInRight 1s ease forwards;
+    }
+
+    .humanoid-image img {
+      max-width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    header nav a {
+  font-size: 20px;      /* bigger font size */
+  color: white;
+  margin: 0 40px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+header nav a:hover {
+  color: #ffcc00;
+}
+
+
+    /* Courses Section */
+ .courses-section {
+  padding: 60px 20px;
+  background: url('../static/humanoid.avif') no-repeat center center/cover;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+    .courses-section h2 {
+      color: #004080;
+      margin-bottom: 40px;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .course-card {
+      background: #004080;
+      color: white;
+      border-radius: 12px;
+      padding: 25px 20px;
+      box-shadow: 0 8px 25px rgba(0, 64, 128, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .course-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 64, 128, 0.5);
+    }
+
+    .course-title {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      0% {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    .heading-gradient {
+  font-size: 48px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #004080, #00bfff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 5px #00bfff; }
+  100% { text-shadow: 0 0 20px #004080; }
+}
+.top-bar {
+  background-color: #00264d;
+  color: #fff;
+  padding: 8px 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contact-info span {
+  margin-right: 18px;
+}
+
+.auth-links a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 10px;
+  padding: 6px 18px;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.auth-links a:hover {
+  background-color: #ffcc00;
+  color: #000;
+  border-color: #ffcc00;
+}
+
+
+
+
+  </style>
+</head>
+<body>
+  <!-- Top Contact and Auth Bar -->
+<div class="top-bar">
+  <div class="contact-info">
+    <span>📞 +91 98765 43210</span>
+    <span>✉️ info@smartcoaching.com</span>
+  </div>
+  <div class="auth-links">
+    <a href="/login" class="btn-login">Login</a>
+    <a href="/register" class="btn-register">Register</a>
+  </div>
+</div>
+
+  <header style="background-color:#004080; padding: 20px; text-align:center; color: white;">
+  <h1 class="heading-gradient">OM INFO SOLUTIONS</h1>
+  <nav>
+    <a href="/" >Home</a>
+    <a href="/about" >About</a>
+    <a href="/courses" >Courses</a>
+    <a href="/contact" >Contact</a>
+  </nav>
+</header>
+
+  <section class="hero">
+    <h1>Unlock Your Future with Smart Coaching</h1>
+    <p>Quality education for computer science enthusiasts and beyond.</p>
+    <button class="btn-primary" onclick="location.href='/courses'">Explore Courses</button>
+  </section>
+
+  <section class="humanoid-section">
+    <div class="humanoid-text">
+      <h2>Humanoid Technology</h2>
+      <p>
+        Dive into the world of cutting-edge humanoid robotics and AI. Our
+        courses include the latest in machine learning, robotics, and
+        automation — preparing you for the future of technology.
+      </p>
+    </div>
+    <div class="humanoid-image">
+      <img src="{{ url_for('static', filename='humanoid-robot.jpg') }}" alt="Humanoid Robot" />
+    </div>
+  </section>
+
+  <section class="courses-section">
+    <h2>Our Computer Science Courses</h2>
+    <div class="course-grid">
+      <div class="course-card">
+        <div class="course-title">Python Programming</div>
+        <p>Learn the fundamentals of Python and build real-world projects.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Data Structures & Algorithms</div>
+        <p>Master essential concepts for coding interviews and problem solving.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Web Development</div>
+        <p>Build dynamic websites using HTML, CSS, JavaScript, and Flask.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Machine Learning</div>
+        <p>Understand algorithms and build intelligent applications.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Artificial Intelligence</div>
+        <p>Explore AI concepts including NLP, computer vision, and robotics.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Cybersecurity</div>
+        <p>Learn to protect systems and networks from cyber threats.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background-color:#004080; color:white; text-align:center; padding:20px; margin-top: 40px;">
+    &copy; 2025 Smart Coaching Institute
+  </footer>
+</body>
+</html>

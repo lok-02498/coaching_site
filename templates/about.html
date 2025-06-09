@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About Us - Smart Coaching Institute</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f8fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Video Background */
+    .background-video {
+  position: fixed;
+ 
+  width: 100vw;  /* full viewport width */
+  height: 100vh; /* full viewport height */
+  object-fit: cover;
+
+  opacity: 0.40;
+  pointer-events: none; /* prevent mouse interaction */
+}
+
+
+    header {
+      background-color: #004080;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    header nav a {
+      margin: 0 20px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .about-section {
+      padding: 50px 20px;
+      background-color: #fff;
+      text-align: center;
+    }
+
+    .about-section h2 {
+      color: #004080;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+
+    .about-section p {
+      font-size: 1.1rem;
+      color: #333;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .counters {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 50px 0;
+      gap: 30px;
+    }
+
+    .counter-box {
+      background: #eaf4ff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      width: 250px;
+      text-align: center;
+    }
+
+    .counter {
+      font-size: 40px;
+      color: #004080;
+      font-weight: bold;
+    }
+
+    .accordion {
+      max-width: 800px;
+      margin: auto;
+      text-align: left;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .accordion-header {
+      background-color: #f0f8ff;
+      padding: 18px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #004080;
+    }
+
+    .accordion-content {
+      padding: 15px 20px;
+      display: none;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .accordion-header.active + .accordion-content {
+      display: block;
+    }
+
+    footer {
+      background-color: #004080;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎬 Video Background -->
+  <video autoplay muted loop playsinline class="background-video" preload="auto" controls>
+
+    <source src="{{ url_for('static', filename='animation.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <header>
+    <h1>OM INFO SOLUTIONS</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/courses">Courses</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="about-section">
+    <h2>Empowering Minds with Technology</h2>
+    <p>
+      At Smart Coaching Institute, we believe in shaping the future through technology-driven education. 
+      Specializing in computer science and IT training, we offer hands-on, career-focused courses 
+      for students, graduates, and working professionals.
+      Our mission is to bridge the gap between theoretical knowledge and industry demands.
+    </p>
+
+    <div class="counters">
+      <div class="counter-box">
+        <div class="counter" data-target="2500">0</div>
+        <p>Students Trained</p>
+      </div>
+      <div class="counter-box">
+        <div class="counter" data-target="20">0</div>
+        <p>Courses Offered</p>
+      </div>
+      <div class="counter-box">
+        <div class="counter" data-target="12">0</div>
+        <p>Years of Excellence</p>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-item">
+        <div class="accordion-header">Why Choose Smart Coaching?</div>
+        <div class="accordion-content">
+          <p>We combine expert mentorship, modern curriculum, and hands-on projects to deliver real-world skills in programming, web development, AI, data science, and more.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">Facilities and Support</div>
+        <div class="accordion-content">
+          <p>Enjoy smart classrooms, recorded lectures, lab access, online portals, doubt-clearing sessions, and placement assistance. We are committed to holistic growth.</p>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <div class="accordion-header">Our Vision</div>
+        <div class="accordion-content">
+          <p>To be a premier computer education center that nurtures future tech leaders by providing affordable, practical, and innovative learning experiences.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Smart Coaching Institute | A Trusted Name in Computer Education</p>
+  </footer>
+
+  <script>
+    // Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      counter.innerText = '0';
+      const update = () => {
+        const target = +counter.getAttribute('data-target');
+        const current = +counter.innerText;
+        const increment = target / 100;
+        if (current < target) {
+          counter.innerText = `${Math.ceil(current + increment)}`;
+          setTimeout(update, 20);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      update();
+    });
+
+    // Accordion Toggle
+    const headers = document.querySelectorAll('.accordion-header');
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        header.classList.toggle('active');
+        const content = header.nextElementSibling;
+        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+  </script>
+
+</body>
+</html>
