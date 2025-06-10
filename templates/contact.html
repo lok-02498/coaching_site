@@ -12,11 +12,73 @@
       background-color: #f9f9f9;
     }
 
+    .heading-gradient {
+      font-size: 48px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #004080, #00bfff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: glow 3s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #00bfff; }
+      100% { text-shadow: 0 0 20px #004080; }
+    }
+
+    .top-bar {
+      background-color: #00264d;
+      color: #fff;
+      padding: 8px 20px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .contact-info span {
+      margin-right: 18px;
+    }
+
+    .auth-links a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 10px;
+      padding: 6px 18px;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .auth-links a:hover {
+      background-color: #ffcc00;
+      color: #000;
+      border-color: #ffcc00;
+    }
+
     header {
       background-color: #004080;
-      color: white;
       padding: 20px;
       text-align: center;
+      color: white;
+    }
+
+    header nav {
+      margin-top: 10px;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    header nav a:hover {
+      color: #ffcc00;
     }
 
     .contact-page {
@@ -25,7 +87,7 @@
       padding: 20px;
       background: white;
       border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
 
     .contact-page h2 {
@@ -42,7 +104,8 @@
       justify-content: space-between;
     }
 
-    .contact-form, .contact-details {
+    .contact-form,
+    .contact-details {
       flex: 1 1 45%;
     }
 
@@ -52,7 +115,8 @@
       gap: 15px;
     }
 
-    .contact-form input, .contact-form textarea {
+    .contact-form input,
+    .contact-form textarea {
       padding: 12px;
       font-size: 1rem;
       border: 1px solid #ccc;
@@ -96,25 +160,66 @@
         flex-direction: column;
       }
     }
+
+    .footer {
+      background-color: #fffefe;
+      color: #0a0101;
+      padding: 10px 10px;
+      text-align: center;
+    }
+
+    .footer .footer-content {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .footer .social-icons {
+      margin: 15px 0;
+    }
+
+    .footer .social-icons a {
+      display: inline-block;
+      margin: 0 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .footer .social-icons a:hover {
+      transform: scale(1.1);
+    }
+
+    .footer .social-icons img {
+      width: 40px;
+      height: 40px;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Top Contact and Auth Bar -->
+  <div class="top-bar">
+    <div class="contact-info">
+      <span>📞 +91 98765 43210</span>
+      <span>✉️ info@coaching.com</span>
+    </div>
+    <div class="auth-links">
+      <a href="/login" class="btn-login">Login</a>
+      <a href="/register" class="btn-register">Register</a>
+    </div>
+  </div>
+
+  <!-- Header with Navigation -->
   <header>
-    <h1>Contact Us</h1>
+    <h1 class="heading-gradient">OM INFO SOLUTIONS</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/courses">Courses</a>
+      <a href="/contact">Contact</a>
+      <a href="/review">Reviews</a>
+    </nav>
   </header>
-  <div style="text-align: center; margin: 20px;">
-  <a href="/" style="
-    background-color: #004080;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  ">⬅ Back to Home</a>
-</div>
 
-
+  <!-- Contact Section -->
   <section class="contact-page">
     <h2>Get in Touch with OM Info Solutions</h2>
     <div class="contact-container">
@@ -127,7 +232,6 @@
           <button type="submit">Send Message</button>
         </form>
       </div>
-
       <div class="contact-details">
         <h3>Contact Information</h3>
         <p><strong>📍 Address:</strong> Sector 21, Delhi, India</p>
@@ -143,5 +247,25 @@
       </div>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>Contact Us:</p>
+      <div class="social-icons">
+        <a href="https://wa.me/919876543210" target="_blank" aria-label="WhatsApp">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+        </a>
+        <a href="https://www.facebook.com/yourpage" target="_blank" aria-label="Facebook">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+        </a>
+        <a href="https://twitter.com/yourhandle" target="_blank" aria-label="Twitter">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+        </a>
+      </div>
+      <p>&copy; 2025 Smart Coaching. All rights reserved.</p>
+    </div>
+  </footer>
+
 </body>
 </html>

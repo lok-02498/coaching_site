@@ -2,198 +2,255 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Computer Courses - Smart Coaching</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <title>Courses - OM INFO SOLUTIONS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <style>
     body {
-      background-color: #f4f4f4;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
+      background: #eef2f5;
       color: #333;
     }
-
-    header, footer {
-      background-color: #004080;
-      color: white;
-      text-align: center;
-      padding: 20px 0;
+        .heading-gradient {
+      font-size: 48px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #004080, #00bfff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: glow 3s infinite alternate;
     }
 
-    nav a {
-      color: white;
-      margin: 0 15px;
+    @keyframes glow {
+      0% { text-shadow: 0 0 5px #00bfff; }
+      100% { text-shadow: 0 0 20px #004080; }
+    }
+
+    .top-bar {
+      background-color: #00264d;
+      color: #fff;
+      padding: 8px 20px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .contact-info span {
+      margin-right: 18px;
+    }
+
+    .auth-links a {
+      color: #fff;
       text-decoration: none;
+      margin-left: 10px;
+      padding: 6px 18px;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .auth-links a:hover {
+      background-color: #ffcc00;
+      color: #000;
+      border-color: #ffcc00;
+    }
+
+    header {
+      background-color: #004080;
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    header nav {
+      margin-top: 10px;
+    }
+
+    header nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
       font-weight: bold;
       transition: color 0.3s ease;
     }
 
-    nav a:hover {
+    header nav a:hover {
       color: #ffcc00;
     }
-
     .courses-section {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      background: url('{{ url_for("static", filename="images/coursesimage.jpg") }}') no-repeat center center/cover;
+      padding: 60px 20px;
+      position: relative;
+      color: white;
     }
-
-    .counters {
-      display: flex;
-      justify-content: space-around;
-      padding: 30px 0;
-      border-bottom: 2px solid #004080;
+    .courses-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
     }
-
-    .counter-box {
-      background: #e6f0ff;
-      border-radius: 10px;
-      padding: 20px;
-      width: 28%;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      text-align: center;
+    .courses-content {
+      position: relative;
+      z-index: 2;
     }
-
-    .counter {
-      font-size: 42px;
-      color: #004080;
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-
     .course-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      padding: 30px 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
     }
-
     .course-card {
-      background-color: #f0f8ff;
-      border-left: 8px solid #004080;
-      padding: 20px 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: box-shadow 0.3s ease;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+      color: #000;
     }
-
     .course-card:hover {
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transform: scale(1.03);
     }
-
+    .course-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .course-content {
+      padding: 20px;
+    }
     .course-title {
-      color: #004080;
-      font-size: 24px;
+      font-size: 22px;
+      color: #003366;
       margin-bottom: 10px;
-      font-weight: 700;
     }
-
     .course-meta {
       font-size: 14px;
-      color: #555;
-      margin-bottom: 12px;
-      font-style: italic;
+      color: #777;
+      margin-bottom: 15px;
     }
-
     .course-description {
-      font-size: 16px;
-      line-height: 1.5;
-      color: #333;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 15px;
     }
+    .enroll-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #2501f5;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s;
+    }
+    .enroll-btn:hover {
+      background-color: #6ab5ff;
+    }
+    .footer {
+  background-color: #fffefe;
+  color: #0a0101;
+  padding: 10px 10px;
+  text-align: center;
+}
 
+.footer .footer-content {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.footer .social-icons {
+  margin: 15px 0;
+}
+
+.footer .social-icons a {
+  display: inline-block;
+  margin: 0 10px;
+  transition: transform 0.3s ease;
+}
+
+.footer .social-icons a:hover {
+  transform: scale(1.1);
+}
+
+.footer .social-icons img {
+  width: 40px;
+  height: 40px;
+ 
+}
+
+    
   </style>
 </head>
 <body>
+
+ <!-- Top Contact and Auth Bar -->
+  <div class="top-bar">
+    <div class="contact-info">
+      <span>📞 +91 98765 43210</span>
+      <span>✉️ info@coaching.com</span>
+    </div>
+    <div class="auth-links">
+      <a href="/login" class="btn-login">Login</a>
+      <a href="/register" class="btn-register">Register</a>
+    </div>
+  </div>
+
+  <!-- Header with Navigation -->
   <header>
-    <h1>Computer Courses at Smart Coaching</h1>
+    <h1 class="heading-gradient">OM INFO SOLUTIONS</h1>
     <nav>
       <a href="/">Home</a>
       <a href="/about">About</a>
       <a href="/courses">Courses</a>
       <a href="/contact">Contact</a>
+      <a href="/review">Reviews</a>
     </nav>
   </header>
-    <section class="courses-section">
-    <h2>Our Computer Science Courses</h2>
-    <div class="course-grid">
-      <div class="course-card">
-        <div class="course-title">Python Programming</div>
-        <p>Learn the fundamentals of Python and build real-world projects.</p>
-      </div>
-      <div class="course-card">
-        <div class="course-title">Data Structures & Algorithms</div>
-        <p>Master essential concepts for coding interviews and problem solving.</p>
-      </div>
-      <div class="course-card">
-        <div class="course-title">Web Development</div>
-        <p>Build dynamic websites using HTML, CSS, JavaScript, and Flask.</p>
-      </div>
-      <div class="course-card">
-        <div class="course-title">Machine Learning</div>
-        <p>Understand algorithms and build intelligent applications.</p>
-      </div>
-      <div class="course-card">
-        <div class="course-title">Artificial Intelligence</div>
-        <p>Explore AI concepts including NLP, computer vision, and robotics.</p>
-      </div>
-      <div class="course-card">
-        <div class="course-title">Cybersecurity</div>
-        <p>Learn to protect systems and networks from cyber threats.</p>
-      </div>
-    </div>
-  </section>
+
 
   <section class="courses-section">
-    <div class="counters">
-      <div class="counter-box">
-        <div class="counter" data-target="{{ courses|length }}">0</div>
-        <p>Courses Available</p>
+    <div class="courses-content">
+      <h2 style="text-align:center;">Explore Our Popular Courses</h2>
+      <div class="course-grid">
+        {% for course in courses %}
+        <div class="course-card">
+          <img src="{{ course.image_url }}" alt="{{ course.title }}" class="course-image">
+          <div class="course-content">
+            <h3 class="course-title">{{ course.title }}</h3>
+            <p class="course-meta">Duration: {{ course.duration }} | Level: {{ course.level }} | Fee: ₹{{ course.fee }}</p>
+            <p class="course-description">{{ course.description }}</p>
+            <a href="/enroll/{{ course.slug }}" class="enroll-btn">Enroll Now</a>
+          </div>
+        </div>
+        {% endfor %}
       </div>
-      <div class="counter-box">
-        <div class="counter" data-target="1200">0</div>
-        <p>Students Enrolled</p>
-      </div>
-      <div class="counter-box">
-        <div class="counter" data-target="10">0</div>
-        <p>Expert Trainers</p>
-      </div>
-    </div>
-
-    <div class="course-grid">
-      {% for course in courses %}
-      <div class="course-card">
-        <h3 class="course-title">{{ course.title }}</h3>
-        <p class="course-meta">Duration: {{ course.duration }} | Level: {{ course.level }}</p>
-        <p class="course-description">{{ course.description }}</p>
-      </div>
-      {% endfor %}
     </div>
   </section>
 
-  <footer>
-    <p>&copy; 2025 Smart Coaching Institute</p>
-  </footer>
+  <footer class="footer">
+  <div class="footer-content">
+    <p>Contact Us:</p>
+    <div class="social-icons">
+      <a href="https://wa.me/919876543210" target="_blank" aria-label="WhatsApp">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+      </a>
+      <a href="https://www.facebook.com/yourpage" target="_blank" aria-label="Facebook">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+      </a>
+      <a href="https://twitter.com/yourhandle" target="_blank" aria-label="Twitter">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+      </a>
+    </div>
+    <p>&copy; 2025 Smart Coaching. All rights reserved.</p>
+  </div>
+</footer>
 
-  <script>
-    // Counter animation
-    const counters = document.querySelectorAll('.counter');
-    counters.forEach(counter => {
-      counter.innerText = '0';
-      const updateCounter = () => {
-        const target = +counter.getAttribute('data-target');
-        const current = +counter.innerText;
-        const increment = target / 200;
-        if (current < target) {
-          counter.innerText = `${Math.ceil(current + increment)}`;
-          setTimeout(updateCounter, 10);
-        } else {
-          counter.innerText = target;
-        }
-      };
-      updateCounter();
-    });
-  </script>
 </body>
 </html>

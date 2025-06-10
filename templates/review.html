@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Reviews | TechPro Institute</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+    }
+
+    .top-bar {
+      background-color: #00264d;
+      color: #fff;
+      padding: 8px 20px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .contact-info span {
+      margin-right: 18px;
+    }
+
+    .auth-links a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 10px;
+      padding: 6px 18px;
+      border: 1px solid #fff;
+      border-radius: 4px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .auth-links a:hover {
+      background-color: #ffcc00;
+      color: #000;
+      border-color: #ffcc00;
+    }
+
+    header {
+      background-color: #004080;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #ffcc00, #ffffff);
+     
+      -webkit-text-fill-color: transparent;
+    }
+
+    header nav a {
+      font-size: 18px;
+      color: white;
+      margin: 0 20px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    header nav a:hover {
+      color: #ffcc00;
+    }
+
+    .testimonial-section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .testimonial-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #1E90FF;
+    }
+
+    .testimonial-section p.subtitle {
+      color: #666;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+    }
+
+    .testimonial-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .testimonial-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .testimonial-card img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 2px solid #1E90FF;
+    }
+
+    .testimonial-card h4 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      color: #222;
+    }
+
+    .testimonial-card span.course {
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .stars {
+      margin: 10px 0;
+      color: #FFD700;
+    }
+
+    .testimonial-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .cloud-feedback-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      background: linear-gradient(145deg, #d0eaff, #87cefa);
+      color: #1e3a8a;
+      border: none;
+      padding: 16px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 60% 60% 55% 55% / 70% 70% 30% 30%;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .cloud-feedback-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      background: linear-gradient(145deg, #b3dcfb, #70bfff);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25);
+    }
+
+    .cloud-feedback-btn i {
+      margin-right: 8px;
+      font-size: 1.2rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      padding-top: 60px;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background: #fff;
+      margin: auto;
+      padding: 30px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 30px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .modal-content input,
+    .modal-content textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .modal-content button {
+      background: #1E90FF;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .stars input {
+      display: none;
+    }
+
+    .stars label {
+      font-size: 24px;
+      color: #ccc;
+      cursor: pointer;
+    }
+
+    .stars input:checked ~ label,
+    .stars label:hover,
+    .stars label:hover ~ label {
+      color: #FFD700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="contact-info">
+      <span>📞 +91 98765 43210</span>
+      <span>✉️ info@coaching.com</span>
+    </div>
+    <div class="auth-links">
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    </div>
+  </div>
+
+  <!-- Header with Navigation -->
+  <header>
+    <h1>OM INFO SOLUTIONS</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/courses">Courses</a>
+      <a href="/contact">Contact</a>
+      <a href="/review">Reviews</a>
+    </nav>
+  </header>
+
+  <!-- Testimonials -->
+  <section class="testimonial-section">
+    <h2>What Our Students Say</h2>
+    <p class="subtitle">Real experiences from students who've transformed their careers with TechPro Institute</p>
+
+    <div class="testimonial-container">
+      <!-- Repeat testimonial-card blocks here -->
+      <div class="testimonial-card">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student">
+        <h4>Priya Sharma</h4>
+        <span class="course">Full Stack Web Development</span>
+        <div class="stars">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+        </div>
+        <p>The instructors were amazing! I landed my first internship within two months of joining.</p>
+      </div>
+      <!-- Add more testimonial cards as needed -->
+    </div>
+  </section>
+
+  <!-- Feedback Button -->
+  <button id="openModalBtn" class="cloud-feedback-btn">
+    <i class="fas fa-cloud"></i> Feedback
+  </button>
+
+  <!-- Feedback Modal -->
+  <div id="feedbackModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModalBtn">&times;</span>
+      <h2 style="color: #1E90FF;">Submit Your Feedback</h2>
+      <form id="popupFeedbackForm">
+        <label>Name</label>
+        <input type="text" name="name" required>
+
+        <label>Course</label>
+        <input type="text" name="course" required>
+
+        <label>Rating</label>
+        <div class="stars">
+          <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+          <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+          <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+          <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+          <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+        </div>
+
+        <label>Feedback</label>
+        <textarea name="review" rows="4" required></textarea>
+
+        <button type="submit">Submit</button>
+        <div id="formMessage"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const openBtn = document.getElementById("openModalBtn");
+    const closeBtn = document.getElementById("closeModalBtn");
+    const modal = document.getElementById("feedbackModal");
+
+    openBtn.onclick = () => modal.style.display = "block";
+    closeBtn.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => {
+      if (e.target === modal) modal.style.display = "none";
+    };
+
+    document.getElementById("popupFeedbackForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      document.getElementById("formMessage").textContent = "Thank you for your feedback!";
+      this.reset();
+      setTimeout(() => modal.style.display = "none", 1500);
+    });
+  </script>
+
+</body>
+</html>

@@ -7,28 +7,92 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
   <style>
     /* Extra inline styles for homepage specific stuff */
-    .hero {
-      background: linear-gradient(135deg, #004080 0%, #66a3ff 100%);
-      color: white;
-      padding: 60px 20px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
+  .carousel-container {
+  position: relative;
+  width: 100%;
+  max-height: 550px;
+  overflow: hidden;
+  background: #000;
+}
 
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-      animation: fadeInDown 1s ease forwards;
-    }
+.carousel {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  position: relative;
+}
 
-    .hero p {
-      font-size: 1.25rem;
-      margin-bottom: 30px;
-      animation: fadeInUp 1s ease forwards;
-    }
+.slide {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+  display: none;
+}
 
-    .btn-primary {
+.slide.active {
+  display: block;
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+.caption {
+  position: absolute;
+  bottom: 15%;
+  left: 10%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 90%;
+}
+
+.caption h2 {
+  font-size: 2em;
+  margin: 0 0 10px;
+}
+
+.caption p {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+}
+
+.caption button {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 5px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+   .dot.active {
+     background-color: #fff;
+   }
+    
+   .btn-primary {
       background-color: #ffcc00;
       color: #004080;
       font-weight: bold;
@@ -51,7 +115,7 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      background-color: #f4f7fb;
+      background-color: rgba((255, 255, 255), 0.9);
       padding: 50px 20px;
       gap: 40px;
     }
@@ -231,6 +295,98 @@ header nav a:hover {
   color: #000;
   border-color: #ffcc00;
 }
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 20px;
+  scroll-snap-type: x mandatory;
+}
+
+.feature-card {
+  min-width: 300px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.feature-card img {
+  width: 50px;
+  margin-bottom: 15px;
+}
+
+.feature-card h3 {
+  color: #ff6600;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  color: #1a1a1a;
+  font-size: 15px;
+}
+.enquiry-button {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  background-color: #007bff;
+  color: white;
+  padding: 10px 12px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-weight: bold;
+  border-radius: 8px 0 0 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.enquiry-button:hover {
+  background-color: #0056b3;
+}
+.footer {
+  background-color: #fffefe;
+  color: #0a0101;
+  padding: 10px 10px;
+  text-align: center;
+}
+
+.footer .footer-content {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.footer .social-icons {
+  margin: 15px 0;
+}
+
+.footer .social-icons a {
+  display: inline-block;
+  margin: 0 10px;
+  transition: transform 0.3s ease;
+}
+
+.footer .social-icons a:hover {
+  transform: scale(1.1);
+}
+
+.footer .social-icons img {
+  width: 40px;
+  height: 40px;
+ 
+}
+
+
+
+
+
+
 
 
 
@@ -242,13 +398,14 @@ header nav a:hover {
 <div class="top-bar">
   <div class="contact-info">
     <span>📞 +91 98765 43210</span>
-    <span>✉️ info@smartcoaching.com</span>
+    <span>✉️ info@coaching.com</span>
   </div>
   <div class="auth-links">
     <a href="/login" class="btn-login">Login</a>
     <a href="/register" class="btn-register">Register</a>
   </div>
 </div>
+
 
   <header style="background-color:#004080; padding: 20px; text-align:center; color: white;">
   <h1 class="heading-gradient">OM INFO SOLUTIONS</h1>
@@ -257,22 +414,63 @@ header nav a:hover {
     <a href="/about" >About</a>
     <a href="/courses" >Courses</a>
     <a href="/contact" >Contact</a>
+    <a href="/review" >Reviews</a>
   </nav>
 </header>
 
-  <section class="hero">
-    <h1>Unlock Your Future with Smart Coaching</h1>
-    <p>Quality education for computer science enthusiasts and beyond.</p>
-    <button class="btn-primary" onclick="location.href='/courses'">Explore Courses</button>
-  </section>
+<section class="carousel-container">
+  <div class="carousel" id="heroCarousel">
+    <div class="slide active">
+      <img src="https://i.ibb.co/sJC9Bp70/Whats-App-Image-2025-05-15-at-13-30-02.jpg" alt="Slide 1">
+      <div class="caption">
+        <h2>Unlock Your Future with Smart Coaching</h2>
+        <p>Quality education for computer science enthusiasts and beyond.</p>
+        <button onclick="location.href='/courses'">Explore Courses</button>
+      </div>
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/T49YKST/output.png" alt="Slide 2">
+      <div class="caption">
+        <h2>Learn Industry-Relevant Skills</h2>
+        <p>Explore our expert-designed courses tailored for success.</p>
+        <button onclick="location.href='/courses'">Start Learning</button>
+      </div>
+    </div>
+    <div class="slide">
+      <img src="https://i.ibb.co/HXVQM1F/aibanner.jpg" alt="Slide 3">
+      <div class="caption">
+        <h2>Join Our Coaching Community</h2>
+        <p>Be part of a thriving student network and achieve your goals.</p>
+        <button onclick="location.href='/courses'">Join Now</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="carousel-dots" id="carouselDots">
+    <span class="dot active" onclick="goToSlide(0)"></span>
+    <span class="dot" onclick="goToSlide(1)"></span>
+    <span class="dot" onclick="goToSlide(2)"></span>
+  </div>
+</section>
+
 
   <section class="humanoid-section">
-    <div class="humanoid-text">
+    <div class="humanoid-text" >
       <h2>Humanoid Technology</h2>
       <p>
         Dive into the world of cutting-edge humanoid robotics and AI. Our
         courses include the latest in machine learning, robotics, and
         automation — preparing you for the future of technology.
+        t the core of this revolution is the use of neural networks to
+        create versatile robotic “brains” that enable robots to tackle 
+        various tasks much like humans do. Additionally, it seems that 
+        major players in the field have opted to build “humanoids,” designing 
+        their robots to mimic human form and size. The reasoning behind this approach 
+        is both simple and profound: our world is inherently designed for humans. 
+        From tools to vehicles to architectural spaces, nearly everything around us
+         is built with human dimensions and capabilities in mind. Therefore, developing 
+         humanoid robots that can seamlessly navigate and operate within this human-centric 
+         environment is a logical and efficient strategy.
       </p>
     </div>
     <div class="humanoid-image">
@@ -280,38 +478,163 @@ header nav a:hover {
     </div>
   </section>
 
-  <section class="courses-section">
-    <h2>Our Computer Science Courses</h2>
-    <div class="course-grid">
-      <div class="course-card">
-        <div class="course-title">Python Programming</div>
-        <p>Learn the fundamentals of Python and build real-world projects.</p>
-      </div>
-      <div class="course-card">
-        <div class="course-title">Data Structures & Algorithms</div>
-        <p>Master essential concepts for coding interviews and problem solving.</p>
-      </div>
-      <div class="course-card">
-        <div class="course-title">Web Development</div>
-        <p>Build dynamic websites using HTML, CSS, JavaScript, and Flask.</p>
-      </div>
-      <div class="course-card">
-        <div class="course-title">Machine Learning</div>
-        <p>Understand algorithms and build intelligent applications.</p>
-      </div>
-      <div class="course-card">
-        <div class="course-title">Artificial Intelligence</div>
-        <p>Explore AI concepts including NLP, computer vision, and robotics.</p>
-      </div>
-      <div class="course-card">
-        <div class="course-title">Cybersecurity</div>
-        <p>Learn to protect systems and networks from cyber threats.</p>
-      </div>
+ <section class="courses-section">
+  <h2>Our Computer Courses</h2>
+  <div class="course-grid">
+    <div class="course-card">
+      <div class="course-title">Web Designing</div>
+      <p>Learn to create visually appealing and user-friendly websites using HTML, CSS, JavaScript, and responsive design tools.</p>
     </div>
-  </section>
+    <div class="course-card">
+      <div class="course-title">Tally</div>
+      <p>Master Tally ERP for managing accounts, inventory, taxation, and payroll – ideal for finance and business professionals.</p>
+    </div>
+    <div class="course-card">
+      <div class="course-title">Hardware Course</div>
+      <p>Understand computer hardware components, troubleshooting, assembling, and maintenance for personal and professional use.</p>
+    </div>
+    <div class="course-card">
+      <div class="course-title">DTP (Desktop Publishing)</div>
+      <p>Design brochures, flyers, and other publications using tools like CorelDRAW, Photoshop, and PageMaker.</p>
+    </div>
+    <div class="course-card">
+      <div class="course-title">Dot Net</div>
+      <p>Develop dynamic applications using the .NET framework with C# and ASP.NET for desktop and web environments.</p>
+    </div>
+    <div class="course-card">
+      <div class="course-title">PHP</div>
+      <p>Build powerful server-side web applications using PHP and integrate with MySQL databases.</p>
+    </div>
+    <div class="course-card">
+      <div class="course-title">'O' Level</div>
+      <p>Gain foundational IT skills with this NIELIT-recognized course covering programming, web tech, and digital literacy.</p>
+    </div>
+    <div class="course-card">
+      <div class="course-title">HDIT</div>
+      <p>Get a holistic understanding of hardware, networking, and software applications with the HDIT professional course.</p>
+    </div>
+    <div class="course-card">
+      <div class="course-title">DCA (Diploma in Computer Applications)</div>
+      <p>Learn essential computer applications like MS Office, Internet basics, and data handling for daily office use.</p>
+    </div>
+    <div class="course-card">
+      <div class="course-title">Computer's Language</div>
+      <p>Understand key programming languages such as C, C++, and Java to build a strong coding foundation.</p>
+    </div>
+  </div>
 
-  <footer style="background-color:#004080; color:white; text-align:center; padding:20px; margin-top: 40px;">
-    &copy; 2025 Smart Coaching Institute
-  </footer>
+  <div class="scroll-container">
+  <div class="feature-card">
+    <img src="https://img.icons8.com/ios-filled/50/1E90FF/training.png" alt="Faculty Icon" />
+    <h3>Experienced Faculty</h3>
+    <p>
+      Certified trainers with industry experience provide practical and theoretical knowledge,
+      ensuring comprehensive IT education.
+    </p>
+  </div>
+
+  <div class="feature-card">
+    <img src="https://img.icons8.com/ios-filled/50/1E90FF/training.png" alt="Blue icon of a person standing and pointing at a presentation board in a classroom or training environment, conveying a sense of instruction and learning" />
+    <h3>Comprehensive Courses</h3>
+    <p>
+      Offers diverse IT courses, from beginner to advanced levels, including trending technologies
+      like AI and Cyber Security.
+    </p>
+  </div>
+  <!-- Card 1: Expert-Led Learning -->
+<div class="feature-card">
+  <img src="https://img.icons8.com/ios-filled/50/1E90FF/online-support.png" alt="Icon of a headset and screen, symbolizing virtual tech support or online learning sessions" />
+  <h3>Expert-Led Learning</h3>
+  <p>
+    Learn from certified instructors through hands-on sessions in software, hardware, programming,
+    and emerging fields like Data Science and Ethical Hacking.
+  </p>
+</div>
+
+<!-- Card 2: Industry-Ready Skills -->
+<div class="feature-card">
+  <img src="https://img.icons8.com/ios-filled/50/1E90FF/developer.png" alt="Icon of a developer working on a laptop, indicating job-oriented training" />
+  <h3>Industry-Ready Skills</h3>
+  <p>
+    Focus on real-world applications and tools used in IT jobs, including Web Development,
+    Tally, Office Automation, and Cloud Computing.
+  </p>
+</div>
+
+<!-- Card 3: Flexible Learning Modes -->
+<div class="feature-card">
+  <img src="https://img.icons8.com/ios-filled/50/1E90FF/laptop.png" alt="Laptop icon indicating online learning flexibility" />
+  <h3>Flexible Learning Modes</h3>
+  <p>
+    Attend classes in-person or online with access to recorded sessions, digital notes,
+    and 24/7 support to match your schedule.
+  </p>
+</div>
+
+<!-- Card 4: Certified Courses -->
+<div class="feature-card">
+  <img src="https://img.icons8.com/ios-filled/50/1E90FF/certificate.png" alt="Certificate icon symbolizing recognized training" />
+  <h3>Certified Courses</h3>
+  <p>
+    Get government-recognized and ISO-certified course completion certificates to boost
+    your career opportunities and credibility.
+  </p>
+</div>
+
+  <!-- Quick Enquiry Button -->
+<a href="/contact" class="enquiry-button" title="Quick Enquiry">
+  &#10097; QUICK ENQUIRY
+</a>
+
+</section>
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index);
+      dots[i].classList.toggle('active', i === index);
+    });
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    const nextIndex = (currentSlide + 1) % slides.length;
+    showSlide(nextIndex);
+  }
+
+  function goToSlide(index) {
+    showSlide(index);
+  }
+
+  // Auto-advance every 5 seconds
+  setInterval(nextSlide, 5000);
+</script>
+
+
+
+
+
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>Contact Us:</p>
+    <div class="social-icons">
+      <a href="https://wa.me/919876543210" target="_blank" aria-label="WhatsApp">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+      </a>
+      <a href="https://www.facebook.com/yourpage" target="_blank" aria-label="Facebook">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+      </a>
+      <a href="https://twitter.com/yourhandle" target="_blank" aria-label="Twitter">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+      </a>
+    </div>
+    <p>&copy; 2025 Smart Coaching. All rights reserved.</p>
+  </div>
+</footer>
+
 </body>
 </html>
