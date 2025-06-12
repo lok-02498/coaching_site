@@ -209,8 +209,13 @@ header nav a:hover {
   </div>
 </div>
 
-<header style="background-color:#004080; padding: 20px; text-align:center; color: white;">
-  <h1 class="heading-gradient">OM INFO SOLUTIONS</h1>
+  <header style="background-color:#004080; padding: 20px; text-align:center; color: white;">
+        <!-- Logo and Title -->
+    <div style="display: flex; align-items: center;gap: 280px;">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="height: 150px; margin-right: 15px;">
+      <h1 class="heading-gradient" style="margin: 40px;">OM INFO SOLUTIONS</h1>
+    </div>
+  
   <nav>
     <a href="/" >Home</a>
     <a href="/about" >About</a>

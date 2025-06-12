@@ -1,318 +1,400 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smart Coaching Institute - Home</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-  <style>
-    /* Extra inline styles for homepage specific stuff */
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smart Coaching Institute - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <style>
+      /* Extra inline styles for homepage specific stuff */
+  /* Carousel Container */
   .carousel-container {
+    position: relative;
+    width: 100%;
+    max-height: 500px; /* Set your desired maximum height for the carousel */
+    overflow: hidden; /* Crucial for hiding parts of the image that go beyond the max-height */
+    background: #000; /* Background for when images are loading or for padding */
+    aspect-ratio: 16 / 9; /* Optional: Define an aspect ratio for a consistent look, can be overridden by max-height */
+  }
+
+  /* Carousel Inner Wrapper */
+  .carousel {
+    display: flex; /* Still useful for horizontal slide movement if you implement it */
+    transition: transform 0.5s ease-in-out;
+    position: relative;
+    width: 100%;
+    height: 100%; /* Make sure the carousel wrapper takes the full height of its container */
+  }
+
+  /* Individual Slide */
+  .slide {
+    min-width: 100%; /* Ensures each slide takes the full width */
+    height: 100%; /* Ensures each slide takes the full height of the carousel wrapper */
+    position: relative; /* Important for positioning the image absolutely within it */
+    display: none; /* Controlled by JavaScript */
+  }
+
+  .slide.active {
+    display: block; /* Show the active slide */
+  }
+
+  /* Image within the Slide */
+  .slide img {
+    position: absolute; /* Position the image absolutely within its slide */
+    top: 0;
+    left: 0;
+    width: 100%; /* Make the image fill the width of the slide */
+    height: 100%; /* Make the image fill the height of the slide */
+    object-fit: cover; /* This is the key: it covers the entire area, cropping as needed */
+    object-position: center; /* Centers the image within the container */
+    vertical-align: middle; /* Good practice, though less critical with absolute positioning */
+  }
+
+  /* Caption (no change needed here, but keeping for context)
+  .caption {
+    position: absolute;
+    bottom: 15%;
+    left: 10%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 90%;
+    z-index: 1; /* Ensure caption is above the image */
+  .caption {
+    position: absolute;
+    bottom: 15%;
+    left: 10%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 90%;
+    z-index: 1; /* Ensure caption is above the image */
+  }
+
+  /* Carousel Dots (no change needed) */
+  .carousel-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1; /* Ensure dots are above the image */
+  }
+
+  .dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .dot.active {
+    background-color: #fff;
+  }
+
+  /* ... (rest of your existing CSS for buttons, sections, etc.) ... */
+
+  /* Existing caption, dots, and other styles remain the same */
+
+
+  .caption h2 {
+    font-size: 2em;
+    margin: 0 0 10px;
+  }
+
+  .caption p {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+  }
+
+  .caption button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+  }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+    .dot.active {
+      background-color: #fff;
+    }
+      
+    .btn-primary {
+        background-color: #ffcc00;
+        color: #004080;
+        font-weight: bold;
+        padding: 12px 28px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease;
+        animation: fadeInUp 1.5s ease forwards;
+      }
+
+      .btn-primary:hover {
+        background-color: #e6b800;
+      }
+
+      /* Humanoid tech section */
+      .humanoid-section {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba((255, 255, 255), 0.9);
+        padding: 50px 20px;
+        gap: 40px;
+      }
+
+      .humanoid-text {
+        flex: 1 1 400px;
+        max-width: 500px;
+        animation: slideInLeft 1s ease forwards;
+      }
+
+      .humanoid-text h2 {
+        color: #004080;
+        margin-bottom: 20px;
+      }
+
+      .humanoid-text p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        color: #333;
+      }
+
+      .humanoid-image {
+        flex: 1 1 400px;
+        max-width: 500px;
+        animation: slideInRight 1s ease forwards;
+      }
+
+      .humanoid-image img {
+        max-width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+      header nav a {
+    font-size: 20px;      /* bigger font size */
+    color: white;
+    margin: 0 40px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+
+  header nav a:hover {
+    color: #ffcc00;
+  }
+
+
+      /* Courses Section */
+  .courses-section {
+    padding: 60px 20px;
+    background: url('../static/humanoid.avif') no-repeat center center/cover;
+    text-align: center;
+    color: white;
+    position: relative;
+  }
+
+      .courses-section h2 {
+        color: #004080;
+        margin-bottom: 40px;
+      }
+
+      .course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .course-card {
+        background: #004080;
+        color: white;
+        border-radius: 12px;
+        padding: 25px 20px;
+        box-shadow: 0 8px 25px rgba(0, 64, 128, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+      }
+
+      .course-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 64, 128, 0.5);
+      }
+
+      .course-title {
+        font-size: 1.5rem;
+        margin-bottom: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+
+      /* Animations */
+      @keyframes fadeInDown {
+        0% {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideInLeft {
+        0% {
+          opacity: 0;
+          transform: translateX(-50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes slideInRight {
+        0% {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .heading-gradient {
+    font-size: 48px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #004080, #00bfff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: glow 3s infinite alternate;
+  }
+
+  @keyframes glow {
+    0% { text-shadow: 0 0 5px #00bfff; }
+    100% { text-shadow: 0 0 20px #004080; }
+  }
+  .top-bar {
+    background-color: #00264d;
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .contact-info span {
+    margin-right: 18px;
+  }
+
+  .auth-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+    padding: 6px 18px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .auth-links a:hover {
+    background-color: #ffcc00;
+    color: #000;
+    border-color: #ffcc00;
+  }
+  .scroll-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 20px;
+    scroll-snap-type: x mandatory;
+  }
+
+ /* CSS SECTION */
+
+.features-section {
+  padding: 40px 20px;
+  background-color: #f8f9fa;
   position: relative;
-  width: 100%;
-  max-height: 550px;
   overflow: hidden;
-  background: #000;
 }
 
-.carousel {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  position: relative;
-}
-
-.slide {
-  min-width: 100%;
-  height: 100%;
-  position: relative;
-  display: none;
-}
-
-.slide.active {
-  display: block;
-}
-
-.slide img {
+.slider-wrapper {
+  overflow: hidden;
   width: 100%;
-  height: auto;
-  object-fit: cover;
-  vertical-align: middle;
-}
-
-.caption {
-  position: absolute;
-  bottom: 15%;
-  left: 10%;
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 20px;
-  border-radius: 12px;
-  max-width: 90%;
-}
-
-.caption h2 {
-  font-size: 2em;
-  margin: 0 0 10px;
-}
-
-.caption p {
-  font-size: 1.2em;
-  margin-bottom: 15px;
-}
-
-.caption button {
-  background-color: #007BFF;
-  color: white;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1em;
-}
-
-.carousel-dots {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.dot {
-  height: 12px;
-  width: 12px;
-  margin: 0 5px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-   .dot.active {
-     background-color: #fff;
-   }
-    
-   .btn-primary {
-      background-color: #ffcc00;
-      color: #004080;
-      font-weight: bold;
-      padding: 12px 28px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: background-color 0.3s ease;
-      animation: fadeInUp 1.5s ease forwards;
-    }
-
-    .btn-primary:hover {
-      background-color: #e6b800;
-    }
-
-    /* Humanoid tech section */
-    .humanoid-section {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba((255, 255, 255), 0.9);
-      padding: 50px 20px;
-      gap: 40px;
-    }
-
-    .humanoid-text {
-      flex: 1 1 400px;
-      max-width: 500px;
-      animation: slideInLeft 1s ease forwards;
-    }
-
-    .humanoid-text h2 {
-      color: #004080;
-      margin-bottom: 20px;
-    }
-
-    .humanoid-text p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #333;
-    }
-
-    .humanoid-image {
-      flex: 1 1 400px;
-      max-width: 500px;
-      animation: slideInRight 1s ease forwards;
-    }
-
-    .humanoid-image img {
-      max-width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    }
-    header nav a {
-  font-size: 20px;      /* bigger font size */
-  color: white;
-  margin: 0 40px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-header nav a:hover {
-  color: #ffcc00;
-}
-
-
-    /* Courses Section */
- .courses-section {
-  padding: 60px 20px;
-  background: url('../static/humanoid.avif') no-repeat center center/cover;
-  text-align: center;
-  color: white;
   position: relative;
 }
 
-    .courses-section h2 {
-      color: #004080;
-      margin-bottom: 40px;
-    }
-
-    .course-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .course-card {
-      background: #004080;
-      color: white;
-      border-radius: 12px;
-      padding: 25px 20px;
-      box-shadow: 0 8px 25px rgba(0, 64, 128, 0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
-
-    .course-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(0, 64, 128, 0.5);
-    }
-
-    .course-title {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-    }
-
-    /* Animations */
-    @keyframes fadeInDown {
-      0% {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes slideInLeft {
-      0% {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes slideInRight {
-      0% {
-        opacity: 0;
-        transform: translateX(50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-    .heading-gradient {
-  font-size: 48px;
-  font-weight: bold;
-  background: linear-gradient(90deg, #004080, #00bfff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  animation: glow 3s infinite alternate;
-}
-
-@keyframes glow {
-  0% { text-shadow: 0 0 5px #00bfff; }
-  100% { text-shadow: 0 0 20px #004080; }
-}
-.top-bar {
-  background-color: #00264d;
-  color: #fff;
-  padding: 8px 20px;
-  font-size: 20px;
+.slider-track {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 30px;
+  animation: slide-left 10s linear infinite;
+  width: fit-content;
 }
 
-.contact-info span {
-  margin-right: 18px;
-}
-
-.auth-links a {
-  color: #fff;
-  text-decoration: none;
-  margin-left: 10px;
-  padding: 6px 18px;
-  border: 1px solid #fff;
-  border-radius: 4px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.auth-links a:hover {
-  background-color: #ffcc00;
-  color: #000;
-  border-color: #ffcc00;
-}
-.scroll-container {
-  display: flex;
-  overflow-x: auto;
-  gap: 16px;
-  padding: 20px;
-  scroll-snap-type: x mandatory;
+@keyframes slide-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .feature-card {
-  min-width: 300px;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-  border: 1px solid #ccc;
-  border-radius: 12px;
+  flex: 0 0 auto;
+  width: 250px;
+  background: white;
+  border-radius: 20px;
   padding: 20px;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   text-align: center;
+  transition: transform 0.3s;
 }
 
 .feature-card img {
@@ -321,65 +403,106 @@ header nav a:hover {
 }
 
 .feature-card h3 {
-  color: #ff6600;
+  font-size: 1.2rem;
   margin-bottom: 10px;
+  color: #004080;
 }
 
 .feature-card p {
-  color: #1a1a1a;
-  font-size: 15px;
+  font-size: 0.95rem;
+  color: #333;
 }
-.enquiry-button {
-  position: fixed;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  background-color: #007bff;
+
+
+
+  .enquiry-button {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: #007bff;
+    color: white;
+    padding: 10px 12px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-weight: bold;
+    border-radius: 8px 0 0 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+
+  .enquiry-button:hover {
+    background-color: #0056b3;
+  }
+ .footer {
+  background-color: #0664e3;
   color: white;
-  padding: 10px 12px;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  padding: 40px 20px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-column {
+  flex: 1 1 200px;
+  min-width: 200px;
+}
+
+.footer-column h3, .footer-column h4 {
+  margin-bottom: 15px;
   font-weight: bold;
-  border-radius: 8px 0 0 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
+}
+
+.footer-column p, .footer-column ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+  color: white;
   text-decoration: none;
-  transition: background 0.3s;
+  transition: color 0.3s;
 }
 
-.enquiry-button:hover {
-  background-color: #0056b3;
-}
-.footer {
-  background-color: #fffefe;
-  color: #0a0101;
-  padding: 10px 10px;
-  text-align: center;
+.footer-column ul li a:hover {
+  color: #a0d8ff;
 }
 
-.footer .footer-content {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.footer .social-icons {
-  margin: 15px 0;
-}
-
-.footer .social-icons a {
+.social-icons a {
   display: inline-block;
-  margin: 0 10px;
-  transition: transform 0.3s ease;
+  margin-right: 10px;
 }
 
-.footer .social-icons a:hover {
+.social-icons img {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.3s;
+}
+
+.social-icons img:hover {
   transform: scale(1.1);
 }
 
-.footer .social-icons img {
-  width: 40px;
-  height: 40px;
- 
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 15px;
+  font-size: 14px;
 }
 
 
@@ -388,230 +511,355 @@ header nav a:hover {
 
 
 
-
-
-
-  </style>
-</head>
-<body>
-  <!-- Top Contact and Auth Bar -->
-<div class="top-bar">
-  <div class="contact-info">
-    <span>📞 +91 98765 43210</span>
-    <span>✉️ info@coaching.com</span>
+    </style>
+  </head>
+  <body>
+    <!-- Top Contact and Auth Bar -->
+  <div class="top-bar">
+    <div class="contact-info">
+      <span>📞 +91 9911216943</span>
+      <span>✉️ support4ois@gmail.com</span>
+    </div>
+    <div class="auth-links">
+      <a href="/login" class="btn-login">Login</a>
+      <a href="/register" class="btn-register">Register</a>
+    </div>
   </div>
-  <div class="auth-links">
-    <a href="/login" class="btn-login">Login</a>
-    <a href="/register" class="btn-register">Register</a>
-  </div>
-</div>
 
 
-  <header style="background-color:#004080; padding: 20px; text-align:center; color: white;">
-  <h1 class="heading-gradient">OM INFO SOLUTIONS</h1>
-  <nav>
-    <a href="/" >Home</a>
-    <a href="/about" >About</a>
-    <a href="/courses" >Courses</a>
-    <a href="/contact" >Contact</a>
-    <a href="/review" >Reviews</a>
-  </nav>
-</header>
-
-<section class="carousel-container">
-  <div class="carousel" id="heroCarousel">
-    <div class="slide active">
-      <img src="https://i.ibb.co/sJC9Bp70/Whats-App-Image-2025-05-15-at-13-30-02.jpg" alt="Slide 1">
-      <div class="caption">
-        <h2>Unlock Your Future with Smart Coaching</h2>
-        <p>Quality education for computer science enthusiasts and beyond.</p>
-        <button onclick="location.href='/courses'">Explore Courses</button>
+    <header style="background-color:#004080; padding: 20px; text-align:center; color: white;">
+          <!-- Logo and Title -->
+      <div style="display: flex; align-items: center;gap: 280px;align-items:center">
+        <img src="{{ url_for('static', filename='images/coachinglogo.jpg') }}" alt="Logo" style="height: 150px; margin-right: 15px;">
+        <h1 class="heading-gradient" style="margin: 40px;">OM INFO SOLUTIONS</h1>
       </div>
+    
+    <nav>
+      <a href="/" >Home</a>
+      <a href="/about" >About</a>
+      <a href="/courses" >Courses</a>
+      <a href="/contact" >Contact</a>
+      <a href="/review" >Reviews</a>
+    </nav>
+    </header>
+  <section class="carousel-container">
+    <div class="carousel" id="heroCarousel">
+
+      <div class="slide active">
+    <img src="static/images/pic1.jpg" alt="Slide 1: Smart Coaching Institute" />
+    <div class="caption">
+      <h2>Unlock Your Future with Smart Coaching</h2>
+      <p>Quality education for computer science enthusiasts and beyond.</p>
+      <button onclick="location.href='/courses'">Explore Courses</button>
     </div>
-    <div class="slide">
-      <img src="https://i.ibb.co/T49YKST/output.png" alt="Slide 2">
-      <div class="caption">
-        <h2>Learn Industry-Relevant Skills</h2>
-        <p>Explore our expert-designed courses tailored for success.</p>
-        <button onclick="location.href='/courses'">Start Learning</button>
-      </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic2.jpg" alt="Slide 2: Industry-Relevant Skills" />
+    <div class="caption">
+      <h2>Learn Industry-Relevant Skills</h2>
+      <p>Explore our expert-designed courses tailored for success.</p>
+      <button onclick="location.href='/courses'">Start Learning</button>
     </div>
-    <div class="slide">
-      <img src="https://i.ibb.co/HXVQM1F/aibanner.jpg" alt="Slide 3">
-      <div class="caption">
-        <h2>Join Our Coaching Community</h2>
-        <p>Be part of a thriving student network and achieve your goals.</p>
-        <button onclick="location.href='/courses'">Join Now</button>
-      </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic3.jpg" alt="Slide 3: Join Our Coaching Community" />
+    <div class="caption">
+      <h2>Join Our Coaching Community</h2>
+      <p>Be part of a thriving student network and achieve your goals.</p>
+      <button onclick="location.href='/courses'">Join Now</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic4.jpg" alt="Slide 4: Advanced Programming Concepts" />
+    <div class="caption">
+      <h2>Master Advanced Programming Concepts</h2>
+      <p>Dive deep into data structures, algorithms, and software development.</p>
+      <button onclick="location.href='/courses'">View Programs</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic5.jpg" alt="Slide 5: Expert Faculty and Mentorship" />
+    <div class="caption">
+      <h2>Learn from Expert Faculty</h2>
+      <p>Benefit from personalized mentorship and real-world insights.</p>
+      <button onclick="location.href='/about'">Meet Our Mentors</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic6.jpg" alt="Slide 6: Modern Learning Environment" />
+    <div class="caption">
+      <h2>Modern Learning Environment</h2>
+      <p>Access state-of-the-art labs and interactive learning resources.</p>
+      <button onclick="location.href='/contact'">Visit Us</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic7.jpg" alt="Slide 7: Career Placement Support" />
+    <div class="caption">
+      <h2>Launch Your Career</h2>
+      <p>Get comprehensive placement assistance and interview preparation.</p>
+      <button onclick="location.href='/courses'">Find Your Path</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic8.jpg" alt="Slide 8: Robotics and AI" />
+    <div class="caption">
+      <h2>Explore Robotics and AI</h2>
+      <p>Future-proof your skills with cutting-edge artificial intelligence and robotics courses.</p>
+      <button onclick="location.href='/courses'">Discover AI</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic9.jpg" alt="Slide 9: Data Science Analytics" />
+    <div class="caption">
+      <h2>Become a Data Expert</h2>
+      <p>Unravel insights with our comprehensive data science and analytics programs.</p>
+      <button onclick="location.href='/courses'">Learn Data Science</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic10.jpg" alt="Slide 10: Cybersecurity Training" />
+    <div class="caption">
+      <h2>Fortify Your Digital World</h2>
+      <p>Master cybersecurity essentials and protect digital assets.</p>
+      <button onclick="location.href='/courses'">Explore Cybersecurity</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic11.jpg" alt="Slide 11: Cloud Computing" />
+    <div class="caption">
+      <h2>Navigate the Cloud</h2>
+      <p>Gain expertise in cloud platforms and architecture for modern IT.</p>
+      <button onclick="location.href='/courses'">Cloud Courses</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic12.jpg" alt="Slide 12: Mobile App Development" />
+    <div class="caption">
+      <h2>Build the Next Big App</h2>
+      <p>Learn to create stunning mobile applications for Android and iOS.</p>
+      <button onclick="location.href='/courses'">App Development</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic13.jpg" alt="Slide 13: UI/UX Design" />
+    <div class="caption">
+      <h2>Design User Experiences</h2>
+      <p>Craft intuitive and engaging interfaces with our UI/UX design course.</p>
+      <button onclick="location.href='/courses'">UI/UX Design</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic14.jpg" alt="Slide 14: Digital Marketing" />
+    <div class="caption">
+      <h2>Excel in Digital Marketing</h2>
+      <p>Master SEO, social media, and online advertising strategies.</p>
+      <button onclick="location.href='/courses'">Digital Marketing</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic15.jpg" alt="Slide 15: Game Development" />
+    <div class="caption">
+      <h2>Create Immersive Games</h2>
+      <p>Turn your passion into pixels with our game development programs.</p>
+      <button onclick="location.href='/courses'">Game Dev</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic16.jpg" alt="Slide 16: E-commerce Solutions" />
+    <div class="caption">
+      <h2>Build Your Online Store</h2>
+      <p>Develop robust e-commerce platforms and boost online sales.</p>
+      <button onclick="location.href='/courses'">E-commerce</button>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="static/images/pic17.jpg" alt="Slide 17: IT Project Management" />
+    <div class="caption">
+      <h2>Lead IT Projects Successfully</h2>
+      <p>Acquire the skills to manage complex IT projects from start to finish.</p>
+      <button onclick="location.href='/courses'">Project Management</button>
     </div>
   </div>
 
-  <div class="carousel-dots" id="carouselDots">
-    <span class="dot active" onclick="goToSlide(0)"></span>
-    <span class="dot" onclick="goToSlide(1)"></span>
-    <span class="dot" onclick="goToSlide(2)"></span>
-  </div>
-</section>
+    </div>
 
 
-  <section class="humanoid-section">
-    <div class="humanoid-text" >
-      <h2>Humanoid Technology</h2>
-      <p>
-        Dive into the world of cutting-edge humanoid robotics and AI. Our
-        courses include the latest in machine learning, robotics, and
-        automation — preparing you for the future of technology.
-        t the core of this revolution is the use of neural networks to
-        create versatile robotic “brains” that enable robots to tackle 
-        various tasks much like humans do. Additionally, it seems that 
-        major players in the field have opted to build “humanoids,” designing 
-        their robots to mimic human form and size. The reasoning behind this approach 
-        is both simple and profound: our world is inherently designed for humans. 
-        From tools to vehicles to architectural spaces, nearly everything around us
-         is built with human dimensions and capabilities in mind. Therefore, developing 
-         humanoid robots that can seamlessly navigate and operate within this human-centric 
-         environment is a logical and efficient strategy.
-      </p>
+
+
+
+    <div class="carousel-dots" id="carouselDots">
+      <span class="dot active" onclick="goToSlide(0)"></span>
+      <span class="dot" onclick="goToSlide(1)"></span>
+      <span class="dot" onclick="goToSlide(2)"></span>
+      <span class="dot" onclick="goToSlide(3)"></span>
+      <span class="dot" onclick="goToSlide(4)"></span>
+      <span class="dot" onclick="goToSlide(5)"></span>
+      <span class="dot" onclick="goToSlide(6)"></span>
+      <span class="dot" onclick="goToSlide(7)"></span>
+      <span class="dot" onclick="goToSlide(8)"></span>
+      <span class="dot" onclick="goToSlide(9)"></span>
+      <span class="dot" onclick="goToSlide(10)"></span>
+      <span class="dot" onclick="goToSlide(11)"></span>
+      <span class="dot" onclick="goToSlide(12)"></span>
+      <span class="dot" onclick="goToSlide(13)"></span>
+      <span class="dot" onclick="goToSlide(14)"></span>
+      <span class="dot" onclick="goToSlide(15)"></span>
+      <span class="dot" onclick="goToSlide(16)"></span>
     </div>
-    <div class="humanoid-image">
-      <img src="{{ url_for('static', filename='humanoid-robot.jpg') }}" alt="Humanoid Robot" />
-    </div>
+
   </section>
 
- <section class="courses-section">
-  <h2>Our Computer Courses</h2>
-  <div class="course-grid">
-    <div class="course-card">
-      <div class="course-title">Web Designing</div>
-      <p>Learn to create visually appealing and user-friendly websites using HTML, CSS, JavaScript, and responsive design tools.</p>
+
+    <section class="humanoid-section">
+      <div class="humanoid-text" >
+        <h2>Humanoid Technology</h2>
+        <p>
+          Dive into the world of cutting-edge humanoid robotics and AI. Our
+          courses include the latest in machine learning, robotics, and
+          automation — preparing you for the future of technology.
+          t the core of this revolution is the use of neural networks to
+          create versatile robotic “brains” that enable robots to tackle 
+          various tasks much like humans do. Additionally, it seems that 
+          major players in the field have opted to build “humanoids,” designing 
+          their robots to mimic human form and size. The reasoning behind this approach 
+          is both simple and profound: our world is inherently designed for humans. 
+          From tools to vehicles to architectural spaces, nearly everything around us
+          is built with human dimensions and capabilities in mind. Therefore, developing 
+          humanoid robots that can seamlessly navigate and operate within this human-centric 
+          environment is a logical and efficient strategy.
+        </p>
+      </div>
+      <div class="humanoid-image">
+        <img src="{{ url_for('static', filename='humanoid-robot.jpg') }}" alt="Humanoid Robot" />
+      </div>
+    </section>
+
+  <section class="courses-section">
+    <h2>Our Computer Courses</h2>
+    <div class="course-grid">
+      <div class="course-card">
+        <div class="course-title">Web Designing</div>
+        <p>Learn to create visually appealing and user-friendly websites using HTML, CSS, JavaScript, and responsive design tools.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Tally</div>
+        <p>Master Tally ERP for managing accounts, inventory, taxation, and payroll – ideal for finance and business professionals.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Hardware Course</div>
+        <p>Understand computer hardware components, troubleshooting, assembling, and maintenance for personal and professional use.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">DTP (Desktop Publishing)</div>
+        <p>Design brochures, flyers, and other publications using tools like CorelDRAW, Photoshop, and PageMaker.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Dot Net</div>
+        <p>Develop dynamic applications using the .NET framework with C# and ASP.NET for desktop and web environments.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">PHP</div>
+        <p>Build powerful server-side web applications using PHP and integrate with MySQL databases.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">'O' Level</div>
+        <p>Gain foundational IT skills with this NIELIT-recognized course covering programming, web tech, and digital literacy.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">HDIT</div>
+        <p>Get a holistic understanding of hardware, networking, and software applications with the HDIT professional course.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">DCA (Diploma in Computer Applications)</div>
+        <p>Learn essential computer applications like MS Office, Internet basics, and data handling for daily office use.</p>
+      </div>
+      <div class="course-card">
+        <div class="course-title">Computer's Language</div>
+        <p>Understand key programming languages such as C, C++, and Java to build a strong coding foundation.</p>
+      </div>
     </div>
-    <div class="course-card">
-      <div class="course-title">Tally</div>
-      <p>Master Tally ERP for managing accounts, inventory, taxation, and payroll – ideal for finance and business professionals.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-title">Hardware Course</div>
-      <p>Understand computer hardware components, troubleshooting, assembling, and maintenance for personal and professional use.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-title">DTP (Desktop Publishing)</div>
-      <p>Design brochures, flyers, and other publications using tools like CorelDRAW, Photoshop, and PageMaker.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-title">Dot Net</div>
-      <p>Develop dynamic applications using the .NET framework with C# and ASP.NET for desktop and web environments.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-title">PHP</div>
-      <p>Build powerful server-side web applications using PHP and integrate with MySQL databases.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-title">'O' Level</div>
-      <p>Gain foundational IT skills with this NIELIT-recognized course covering programming, web tech, and digital literacy.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-title">HDIT</div>
-      <p>Get a holistic understanding of hardware, networking, and software applications with the HDIT professional course.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-title">DCA (Diploma in Computer Applications)</div>
-      <p>Learn essential computer applications like MS Office, Internet basics, and data handling for daily office use.</p>
-    </div>
-    <div class="course-card">
-      <div class="course-title">Computer's Language</div>
-      <p>Understand key programming languages such as C, C++, and Java to build a strong coding foundation.</p>
+    </section>
+
+ <!-- HTML SECTION -->
+<section class="features-section">
+  <div class="slider-wrapper">
+    <div class="slider-track">
+      <!-- Cards (repeated twice for infinite effect) -->
+      <div class="feature-card">
+        <img src="https://img.icons8.com/ios-filled/50/1E90FF/online-support.png" alt="" />
+        <h3>Expert-Led Learning</h3>
+        <p>Learn from certified instructors through hands-on sessions in software, hardware, and more.</p>
+      </div>
+      <div class="feature-card">
+        <img src="https://img.icons8.com/ios-filled/50/1E90FF/developer.png" alt="" />
+        <h3>Industry-Ready Skills</h3>
+        <p>Real-world IT training including Web Dev, Tally, and Cloud tools.</p>
+      </div>
+      <div class="feature-card">
+        <img src="https://img.icons8.com/ios-filled/50/1E90FF/laptop.png" alt="" />
+        <h3>Flexible Learning Modes</h3>
+        <p>Online or in-person classes, recorded sessions, digital notes, 24/7 support.</p>
+      </div>
+      <div class="feature-card">
+        <img src="https://img.icons8.com/ios-filled/50/1E90FF/certificate.png" alt="" />
+        <h3>Certified Courses</h3>
+        <p>Government-recognized, ISO-certified certificates for better career chances.</p>
+      </div>
+
+      <!-- Duplicate for infinite scrolling -->
+      <div class="feature-card">
+        <img src="https://img.icons8.com/ios-filled/50/1E90FF/online-support.png" alt="" />
+        <h3>Expert-Led Learning</h3>
+        <p>Learn from certified instructors through hands-on sessions in software, hardware, and more.</p>
+      </div>
+      <div class="feature-card">
+        <img src="https://img.icons8.com/ios-filled/50/1E90FF/developer.png" alt="" />
+        <h3>Industry-Ready Skills</h3>
+        <p>Real-world IT training including Web Dev, Tally, and Cloud tools.</p>
+      </div>
+      <div class="feature-card">
+        <img src="https://img.icons8.com/ios-filled/50/1E90FF/laptop.png" alt="" />
+        <h3>Flexible Learning Modes</h3>
+        <p>Online or in-person classes, recorded sessions, digital notes, 24/7 support.</p>
+      </div>
+      <div class="feature-card">
+        <img src="https://img.icons8.com/ios-filled/50/1E90FF/certificate.png" alt="" />
+        <h3>Certified Courses</h3>
+        <p>Government-recognized, ISO-certified certificates for better career chances.</p>
+      </div>
     </div>
   </div>
 
-  <div class="scroll-container">
-  <div class="feature-card">
-    <img src="https://img.icons8.com/ios-filled/50/1E90FF/training.png" alt="Faculty Icon" />
-    <h3>Experienced Faculty</h3>
-    <p>
-      Certified trainers with industry experience provide practical and theoretical knowledge,
-      ensuring comprehensive IT education.
-    </p>
-  </div>
-
-  <div class="feature-card">
-    <img src="https://img.icons8.com/ios-filled/50/1E90FF/training.png" alt="Blue icon of a person standing and pointing at a presentation board in a classroom or training environment, conveying a sense of instruction and learning" />
-    <h3>Comprehensive Courses</h3>
-    <p>
-      Offers diverse IT courses, from beginner to advanced levels, including trending technologies
-      like AI and Cyber Security.
-    </p>
-  </div>
-  <!-- Card 1: Expert-Led Learning -->
-<div class="feature-card">
-  <img src="https://img.icons8.com/ios-filled/50/1E90FF/online-support.png" alt="Icon of a headset and screen, symbolizing virtual tech support or online learning sessions" />
-  <h3>Expert-Led Learning</h3>
-  <p>
-    Learn from certified instructors through hands-on sessions in software, hardware, programming,
-    and emerging fields like Data Science and Ethical Hacking.
-  </p>
-</div>
-
-<!-- Card 2: Industry-Ready Skills -->
-<div class="feature-card">
-  <img src="https://img.icons8.com/ios-filled/50/1E90FF/developer.png" alt="Icon of a developer working on a laptop, indicating job-oriented training" />
-  <h3>Industry-Ready Skills</h3>
-  <p>
-    Focus on real-world applications and tools used in IT jobs, including Web Development,
-    Tally, Office Automation, and Cloud Computing.
-  </p>
-</div>
-
-<!-- Card 3: Flexible Learning Modes -->
-<div class="feature-card">
-  <img src="https://img.icons8.com/ios-filled/50/1E90FF/laptop.png" alt="Laptop icon indicating online learning flexibility" />
-  <h3>Flexible Learning Modes</h3>
-  <p>
-    Attend classes in-person or online with access to recorded sessions, digital notes,
-    and 24/7 support to match your schedule.
-  </p>
-</div>
-
-<!-- Card 4: Certified Courses -->
-<div class="feature-card">
-  <img src="https://img.icons8.com/ios-filled/50/1E90FF/certificate.png" alt="Certificate icon symbolizing recognized training" />
-  <h3>Certified Courses</h3>
-  <p>
-    Get government-recognized and ISO-certified course completion certificates to boost
-    your career opportunities and credibility.
-  </p>
-</div>
-
-  <!-- Quick Enquiry Button -->
-<a href="/contact" class="enquiry-button" title="Quick Enquiry">
-  &#10097; QUICK ENQUIRY
-</a>
-
+  <a href="/contact" class="enquiry-button" title="Quick Enquiry">&#10097; QUICK ENQUIRY</a>
 </section>
-<script>
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.slide');
-  const dots = document.querySelectorAll('.dot');
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.toggle('active', i === index);
-      dots[i].classList.toggle('active', i === index);
-    });
-    currentSlide = index;
-  }
 
-  function nextSlide() {
-    const nextIndex = (currentSlide + 1) % slides.length;
-    showSlide(nextIndex);
-  }
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
 
-  function goToSlide(index) {
-    showSlide(index);
-  }
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        dots[i].classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+    }
 
-  // Auto-advance every 5 seconds
-  setInterval(nextSlide, 5000);
-</script>
+    function nextSlide() {
+      const nextIndex = (currentSlide + 1) % slides.length;
+      showSlide(nextIndex);
+    }
+
+    function goToSlide(index) {
+      showSlide(index);
+    }
+
+    // Auto-advance every 5 seconds
+    setInterval(nextSlide, 5000);
+  </script>
 
 
 
@@ -620,21 +868,49 @@ header nav a:hover {
 
 <footer class="footer">
   <div class="footer-content">
-    <p>Contact Us:</p>
-    <div class="social-icons">
-      <a href="https://wa.me/919876543210" target="_blank" aria-label="WhatsApp">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
-      </a>
-      <a href="https://www.facebook.com/yourpage" target="_blank" aria-label="Facebook">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-      </a>
-      <a href="https://twitter.com/yourhandle" target="_blank" aria-label="Twitter">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
-      </a>
+    <div class="footer-column">
+      <h3>OM INFO SOLUTIONS</h3>
+      <p>Partner with OM INFO SOLUTIONS and unlock the full potential of technology to propel your business forward. Let's embark on a journey of innovation, growth, and success together.</p>
     </div>
-    <p>&copy; 2025 Smart Coaching. All rights reserved.</p>
+
+    <div class="footer-column">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Training & Internship</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Important Links</h4>
+      <ul>
+        <li><a href="#">Terms and Conditions</a></li>
+        <li><a href="#">Legal</a></li>
+        <li><a href="#">Business</a></li>
+        <li><a href="#">Partners</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Let’s Connect!</h4>
+      <p>We are passionate about driving success through technology.</p>
+      <div class="social-icons">
+        <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
+        <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
+        <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+        <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 om info solutions. Powered by om info.</p>
   </div>
 </footer>
 
-</body>
-</html>
+
+  </body>
+  </html>
