@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OM Info Solutions | Cover Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      background: url('/static/images/humanoid.avif') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+
+    .cover-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      background-color: rgba(0, 0, 0, 0.5); /* semi-transparent overlay */
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: bold;
+    }
+
+    .nav-link.active,
+    .nav-link:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    .header {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .site-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    footer {
+      margin-top: auto;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="cover-container ">
+     
+    <main>
+       <img src="{{ url_for('static', filename='images/cleaned_logo.png') }}" alt="Logo" class="me-3" style="height: 80px;">
+   
+  
+      <h1 class="display-4">Welcome to OM INFO SOLUTIONS</h1>
+      <p class="lead mt-3">Empowering your future with quality education and skills.</p>
+      <p class="lead">
+        <a href="/home" class="btn btn-lg btn-light fw-bold border-white bg-white text-dark mt-3">Get Started</a>
+      </p>
+    </main>
+    <footer class="mt-5">
+      <p>&copy; 2025 OM Info Solutions. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

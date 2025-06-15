@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OM INFO SOLUTIONS Admission Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #e3f2fd, #fff);
+      padding: 30px;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      padding: 30px;
+      max-width: 850px;
+      margin: auto;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 5px;
+      color: #0d47a1;
+    }
+
+    .subheading {
+      text-align: center;
+      margin: 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      transition: 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+      border-color: #1976d2;
+      box-shadow: 0 0 5px rgba(25, 118, 210, 0.2);
+    }
+
+    textarea {
+      height: 70px;
+      resize: vertical;
+    }
+
+    .inline {
+      display: inline-block;
+      margin-right: 15px;
+      margin-top: 5px;
+    }
+
+    .row {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .row .inline {
+      flex: 1;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #0d47a1;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      margin-top: 25px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background: #1565c0;
+    }
+
+    img#photo-preview {
+      display: block;
+      margin-top: 10px;
+      width: 120px;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .row {
+        flex-direction: column;
+      }
+
+      .inline {
+        display: block;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>OM INFO SOLUTIONS</h2>
+    <p class="subheading">Education Training Development</p>
+    <p class="subheading">RZ-693, Old Mehrauli Road, Raj Nagar-I, Palam Colony, New Delhi-110077</p>
+    <p class="subheading">Contact: 9911216943, 9990098798</p>
+
+    <form id="admissionForm" method="POST" enctype="multipart/form-data" action="/submit">
+
+      <label>Name of Student</label>
+      <input type="text" name="student_name" required>
+
+      <label>Father's/Husband's Name</label>
+      <input type="text" name="father_name" required>
+
+      <label>Date of Birth</label>
+      <input type="text" name="dob" placeholder="DD/MM/YYYY" required>
+
+      <label>Address for Communication</label>
+      <textarea name="comm_address" required></textarea>
+
+      <label>Contact Number</label>
+      <div class="row">
+        <input type="text" name="home_phone" placeholder="Home">
+        <input type="text" name="mobile" placeholder="Mobile" required>
+      </div>
+
+      <label>Qualification</label>
+      <div>
+        <label class="inline"><input type="checkbox" name="qual" value="10th"> 10th</label>
+        <label class="inline"><input type="checkbox" name="qual" value="10+2"> 10+2</label>
+        <label class="inline"><input type="checkbox" name="qual" value="Graduate"> Graduate</label>
+        <label class="inline"><input type="checkbox" name="qual" value="Post Graduate"> Post Graduate</label>
+      </div>
+
+      <label>Nationality</label>
+      <div>
+        <label class="inline"><input type="radio" name="nationality" value="Indian"> Indian</label>
+        <label class="inline"><input type="radio" name="nationality" value="Other"> Other</label>
+      </div>
+
+      <label>Sex</label>
+      <div>
+        <label class="inline"><input type="radio" name="sex" value="Male"> Male</label>
+        <label class="inline"><input type="radio" name="sex" value="Female"> Female</label>
+      </div>
+
+      <label>Marital Status</label>
+      <div>
+        <label class="inline"><input type="radio" name="marital" value="Married"> Married</label>
+        <label class="inline"><input type="radio" name="marital" value="Unmarried"> Unmarried</label>
+      </div>
+
+      <label>Self Occupation</label>
+      <input type="text" name="occupation">
+
+      <label>Email</label>
+      <input type="email" name="email">
+
+      <label>Permanent Address</label>
+      <textarea name="permanent_address"></textarea>
+
+      <label>Father’s/Guardian’s Occupation</label>
+      <input type="text" name="guardian_occupation">
+
+      <label>Upload Photo</label>
+      <input type="file" name="photo" id="photoUpload" accept="image/*">
+      <img id="photo-preview" style="display: none;" />
+
+      <button type="submit">Submit Admission Form</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('photoUpload').addEventListener('change', function (e) {
+      const preview = document.getElementById('photo-preview');
+      const file = e.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          preview.src = event.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+</html>

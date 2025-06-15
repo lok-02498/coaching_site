@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; font-size: 12px; padding: 20px; }
+    h2 { color: #0d47a1; }
+    .field { margin-bottom: 10px; }
+    img { max-width: 100px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>OM INFO SOLUTIONS Admission Form</h2>
+  <div class="field"><strong>Student Name:</strong> {{ data.student_name }}</div>
+  <div class="field"><strong>Father's/Husband's Name:</strong> {{ data.father_name }}</div>
+  <div class="field"><strong>DOB:</strong> {{ data.dob }}</div>
+  <div class="field"><strong>Communication Address:</strong> {{ data.comm_address }}</div>
+  <div class="field"><strong>Phone:</strong> Home - {{ data.home_phone }} | Mobile - {{ data.mobile }}</div>
+  <div class="field"><strong>Qualification:</strong> {{ request.form.getlist('qual')|join(', ') }}</div>
+  <div class="field"><strong>Nationality:</strong> {{ data.nationality }}</div>
+  <div class="field"><strong>Sex:</strong> {{ data.sex }}</div>
+  <div class="field"><strong>Marital Status:</strong> {{ data.marital }}</div>
+  <div class="field"><strong>Occupation:</strong> {{ data.occupation }}</div>
+  <div class="field"><strong>Email:</strong> {{ data.email }}</div>
+  <div class="field"><strong>Permanent Address:</strong> {{ data.permanent_address }}</div>
+  <div class="field"><strong>Guardian’s Occupation:</strong> {{ data.guardian_occupation }}</div>
+{% if data.photo_path %}
+  <img src="{{ data.photo_path }}" alt="Uploaded Photo" style="max-width:120px; max-height:150px;"/>
+{% endif %}
+
+</body>
+</html>

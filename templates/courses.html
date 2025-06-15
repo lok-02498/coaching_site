@@ -4,244 +4,59 @@
   <meta charset="UTF-8" />
   <title>Courses - OM INFO SOLUTIONS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #eef2f5;
-      color: #333;
-    }
-
-    .heading-gradient {
-      font-size: 48px;
-      font-weight: bold;
-      background: linear-gradient(90deg, #004080, #00bfff);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
-      animation: glow 3s infinite alternate;
-    }
-
-    @keyframes glow {
-      0% { text-shadow: 0 0 5px #00bfff; }
-      100% { text-shadow: 0 0 20px #004080; }
-    }
-
-    .top-bar {
-      background-color: #00264d;
-      color: #fff;
-      padding: 8px 20px;
-      font-size: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .contact-info span {
-      margin-right: 18px;
-    }
-
-    .auth-links a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 10px;
-      padding: 6px 18px;
-      border: 1px solid #fff;
-      border-radius: 4px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .auth-links a:hover {
-      background-color: #ffcc00;
-      color: #000;
-      border-color: #ffcc00;
-    }
-
-    header {
-      background-color: #004080;
-      padding: 20px;
-      text-align: center;
-      color: white;
-    }
-
-    header nav {
-      margin-top: 10px;
-    }
-
-    header nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-      transition: color 0.3s ease;
-    }
-
-    header nav a:hover {
-      color: #ffcc00;
-    }
-
-    .courses-section {
-      background: url('{{ url_for("static", filename="images/coursesimage.jpg") }}') no-repeat center center/cover;
-      padding: 60px 20px;
-      position: relative;
-      color: white;
-    }
-
-    .courses-section::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1;
-    }
-
-    .courses-content {
-      position: relative;
-      z-index: 2;
-    }
-
-    .course-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 30px;
-    }
-
-    .course-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
-      color: #000;
-    }
-
-    .course-card:hover {
-      transform: scale(1.03);
-    }
-
-    .course-image {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      filter: grayscale(100%);
-      transition: filter 0.5s ease;
-    }
-
-    .course-card:hover .course-image {
-      filter: grayscale(0%);
-    }
-
-    .course-content {
-      padding: 20px;
-    }
-
-    .course-title {
-      font-size: 22px;
-      color: #003366;
-      margin-bottom: 10px;
-    }
-
-    .course-meta {
-      font-size: 14px;
-      color: #777;
-      margin-bottom: 15px;
-    }
-
-    .course-description {
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
-
-    .enroll-btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #2501f5;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background-color 0.3s;
-    }
-
-    .enroll-btn:hover {
-      background-color: #6ab5ff;
-    }
-
-    .footer {
-      background-color: #fffefe;
-      color: #0a0101;
-      padding: 10px 10px;
-      text-align: center;
-    }
-
-    .footer .footer-content {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    .footer .social-icons {
-      margin: 15px 0;
-    }
-
-    .footer .social-icons a {
-      display: inline-block;
-      margin: 0 10px;
-      transition: transform 0.3s ease;
-    }
-
-    .footer .social-icons a:hover {
-      transform: scale(1.1);
-    }
-
-    .footer .social-icons img {
-      width: 40px;
-      height: 40px;
-    }
-  </style>
+   <link rel="stylesheet" href="static/style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
+
 <body>
+ 
+
 
   <!-- Top Contact and Auth Bar -->
-  <div class="top-bar">
-    <div class="contact-info">
-      <span>📞 +91 98765 43210</span>
-      <span>✉️ info@coaching.com</span>
-    </div>
-    <div class="auth-links">
-      <a href="/login" class="btn-login">Login</a>
-      <a href="/register" class="btn-register">Register</a>
+ <!-- Top Bar (Fixed) -->
+<div class="top-bar fixed-top bg-dark text-white d-flex justify-content-between px-4 py-2" style="z-index: 1040;">
+  <div class="contact-info">
+    <span class="me-3">📞 +91 9911216943</span>
+    <span>✉️ support4ois@gmail.com</span>
+  </div>
+  <div class="auth-links">
+    <a href="/login" class="btn btn-sm btn-outline-light me-2">Login</a>
+    <a href="/register" class="btn btn-sm btn-light text-primary">Register</a>
+  </div>
+</div>
+
+<!-- Main Header (below top-bar, also fixed) -->
+<header class="bg-primary text-white py-3" style="position: fixed; top: 44px; width: 100%; z-index: 1030;">
+  <div class="container-fluid px-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+      <!-- Logo and Title -->
+      <div class="d-flex align-items-center">
+        <img src="{{ url_for('static', filename='images/cleaned_logo.png') }}" alt="Logo" class="me-3" style="height: 80px;">
+        <h2 class="mb-0 fw-bold">OM INFO SOLUTIONS</h2>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="mt-3 mt-md-0">
+        <ul class="nav">
+          <li class="nav-item"><a href="/" class="nav-link text-white">Home</a></li>
+          <li class="nav-item"><a href="/about" class="nav-link text-white">About</a></li>
+          <li class="nav-item"><a href="/courses" class="nav-link text-white">Courses</a></li>
+          <li class="nav-item"><a href="/contact" class="nav-link text-white">Contact</a></li>
+          <li class="nav-item"><a href="/review" class="nav-link text-white">Reviews</a></li>
+        </ul>
+      </nav>
     </div>
   </div>
-
-  <header style="background-color:#004080; padding: 20px; text-align:center; color: white;">
-        <!-- Logo and Title -->
-    <div style="display: flex; align-items: center;gap: 280px; align-items: center;">
-      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="height: 150px; margin-right: 15px;">
-      <h1 class="heading-gradient" style="margin: 40px;">OM INFO SOLUTIONS</h1>
-    </div>
-  
-  <nav>
-    <a href="/" >Home</a>
-    <a href="/about" >About</a>
-    <a href="/courses" >Courses</a>
-    <a href="/contact" >Contact</a>
-    <a href="/review" >Reviews</a>
-  </nav>
 </header>
 
+
   <!-- Courses Section with Grayscale-to-Color Hover Effect -->
-  <section class="courses-section">
-    <div class="courses-content">
-      <h2 style="text-align:center;">Explore Our Popular Courses</h2>
-      <div class="course-grid">
-        {% for course in courses %}
+  <section class="course-section ">
+    <div class="container-fluid px-4">
+      <div class="courses-content">
+        <h2 style="text-align:center;">Explore Our Popular Courses</h2>
+        <div class="course-grid">
+          {% for course in courses %}
         <div class="course-card">
           <div class="image-wrapper">
             <img src="{{ course.image_url }}" alt="{{ course.title }}" class="course-image">
@@ -250,31 +65,58 @@
             <h3 class="course-title">{{ course.title }}</h3>
             <p class="course-meta">Duration: {{ course.duration }} | Level: {{ course.level }} | Fee: ₹{{ course.fee }}</p>
             <p class="course-description">{{ course.description }}</p>
-            <a href="/enroll/{{ course.slug }}" class="enroll-btn">Enroll Now</a>
+           <a href="{{ url_for('admission_form', slug=course.slug) }}" class="enroll-btn">Enroll Now</a>
+
           </div>
         </div>
         {% endfor %}
       </div>
     </div>
   </section>
-  <footer class="footer">
-  <div class="footer-content">
-    <h3>Contact Us</h3>
-    <p>Email: info@coaching.com</p>
-    <p>Phone: +91 98765 43210</p>
 
-    <div class="social-icons">
-      <a href="https://wa.me/919876543210" target="_blank" aria-label="WhatsApp">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
-      </a>
-      <a href="https://www.facebook.com/yourpage" target="_blank" aria-label="Facebook">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-      </a>
-      <a href="https://twitter.com/yourhandle" target="_blank" aria-label="Twitter">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
-      </a>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-column">
+      <h3>OM INFO SOLUTIONS</h3>
+      <p>Partner with OM INFO SOLUTIONS and unlock the full potential of technology to propel your business forward. Let's embark on a journey of innovation, growth, and success together.</p>
     </div>
 
-    <p class="copyright">© 2025 OM INFO SOLUTIONS. All rights reserved.</p>
+    <div class="footer-column">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Training & Internship</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Important Links</h4>
+      <ul>
+        <li><a href="#">Terms and Conditions</a></li>
+        <li><a href="#">Legal</a></li>
+        <li><a href="#">Business</a></li>
+        <li><a href="#">Partners</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Let’s Connect!</h4>
+      <p>We are passionate about driving success through technology.</p>
+      <div class="social-icons">
+        <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
+        <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
+        <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
+        <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
+      </div>
+    </div>
+  </div>
+
+   <div class="footer-bottom">
+    <p>&copy; 2025 om info solutions. Powered by om info.</p>
   </div>
 </footer>
+</body>
+</html>

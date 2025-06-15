@@ -4,231 +4,65 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact Us - OM Info Solutions</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      background-color: #f9f9f9;
-    }
-
-    .heading-gradient {
-      font-size: 48px;
-      font-weight: bold;
-      background: linear-gradient(90deg, #004080, #00bfff);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      -webkit-text-fill-color: transparent;
-      animation: glow 3s infinite alternate;
-    }
-
-    @keyframes glow {
-      0% { text-shadow: 0 0 5px #00bfff; }
-      100% { text-shadow: 0 0 20px #004080; }
-    }
-
-    .top-bar {
-      background-color: #00264d;
-      color: #fff;
-      padding: 8px 20px;
-      font-size: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .contact-info span {
-      margin-right: 18px;
-    }
-
-    .auth-links a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 10px;
-      padding: 6px 18px;
-      border: 1px solid #fff;
-      border-radius: 4px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .auth-links a:hover {
-      background-color: #ffcc00;
-      color: #000;
-      border-color: #ffcc00;
-    }
-
-    header {
-      background-color: #004080;
-      padding: 20px;
-      text-align: center;
-      color: white;
-    }
-
-    header nav {
-      margin-top: 10px;
-    }
-
-    header nav a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
-      transition: color 0.3s ease;
-    }
-
-    header nav a:hover {
-      color: #ffcc00;
-    }
-
-    .contact-page {
-      max-width: 1100px;
-      margin: 50px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    }
-
-    .contact-page h2 {
-      color: #004080;
-      font-size: 2.5rem;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .contact-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      justify-content: space-between;
-    }
-
-    .contact-form,
-    .contact-details {
-      flex: 1 1 45%;
-    }
-
-    .contact-form form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .contact-form input,
-    .contact-form textarea {
-      padding: 12px;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    .contact-form button {
-      padding: 12px;
-      background-color: #004080;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .contact-form button:hover {
-      background-color: #003366;
-    }
-
-    .contact-details h3 {
-      margin-bottom: 20px;
-      color: #004080;
-    }
-
-    .contact-details p {
-      margin: 8px 0;
-      color: #333;
-    }
-
-    iframe {
-      width: 100%;
-      height: 300px;
-      border: 0;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-
-    @media (max-width: 768px) {
-      .contact-container {
-        flex-direction: column;
-      }
-    }
-
-    .footer {
-      background-color: #fffefe;
-      color: #0a0101;
-      padding: 10px 10px;
-      text-align: center;
-    }
-
-    .footer .footer-content {
-      max-width: 500px;
-      margin: 0 auto;
-    }
-
-    .footer .social-icons {
-      margin: 15px 0;
-    }
-
-    .footer .social-icons a {
-      display: inline-block;
-      margin: 0 10px;
-      transition: transform 0.3s ease;
-    }
-
-    .footer .social-icons a:hover {
-      transform: scale(1.1);
-    }
-
-    .footer .social-icons img {
-      width: 40px;
-      height: 40px;
-    }
-  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
 </head>
 <body>
 
-  <!-- Top Contact and Auth Bar -->
-  <div class="top-bar">
-    <div class="contact-info">
-      <span>📞 +91 98765 43210</span>
-      <span>✉️ info@coaching.com</span>
-    </div>
-    <div class="auth-links">
-      <a href="/login" class="btn-login">Login</a>
-      <a href="/register" class="btn-register">Register</a>
+   <!-- Top Contact and Auth Bar -->
+ <!-- Top Bar (Fixed) -->
+<div class="top-bar fixed-top bg-dark text-white d-flex justify-content-between px-4 py-2" style="z-index: 1040;">
+  <div class="contact-info">
+    <span class="me-3">📞 +91 9911216943</span>
+    <span>✉️ support4ois@gmail.com</span>
+  </div>
+  <div class="auth-links">
+    <a href="/login" class="btn btn-sm btn-outline-light me-2">Login</a>
+    <a href="/register" class="btn btn-sm btn-light text-primary">Register</a>
+  </div>
+</div>
+
+<!-- Main Header (below top-bar, also fixed) -->
+<header class="bg-primary text-white py-3" style="position: fixed; top: 44px; width: 100%; z-index: 1030;">
+  <div class="container-fluid px-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+      <!-- Logo and Title -->
+      <div class="d-flex align-items-center">
+        <img src="{{ url_for('static', filename='images/cleaned_logo.png') }}" alt="Logo" class="me-3" style="height: 80px;">
+        <h2 class="mb-0 fw-bold">OM INFO SOLUTIONS</h2>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="mt-3 mt-md-0">
+        <ul class="nav">
+          <li class="nav-item"><a href="/" class="nav-link text-white">Home</a></li>
+          <li class="nav-item"><a href="/about" class="nav-link text-white">About</a></li>
+          <li class="nav-item"><a href="/courses" class="nav-link text-white">Courses</a></li>
+          <li class="nav-item"><a href="/contact" class="nav-link text-white">Contact</a></li>
+          <li class="nav-item"><a href="/review" class="nav-link text-white">Reviews</a></li>
+        </ul>
+      </nav>
     </div>
   </div>
-
-  <header style="background-color:#004080; padding: 20px; text-align:center; color: white;">
-        <!-- Logo and Title -->
-    <div style="display: flex; align-items: center;gap: 280px;">
-      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" style="height: 150px; margin-right: 15px;">
-      <h1 class="heading-gradient" style="margin: 40px;">OM INFO SOLUTIONS</h1>
-    </div>
-  
-  <nav>
-    <a href="/" >Home</a>
-    <a href="/about" >About</a>
-    <a href="/courses" >Courses</a>
-    <a href="/contact" >Contact</a>
-    <a href="/review" >Reviews</a>
-  </nav>
 </header>
+
+  <!-- Flash Message -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flashes">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
 
   <!-- Contact Section -->
   <section class="contact-page">
     <h2>Get in Touch with OM Info Solutions</h2>
     <div class="contact-container">
       <div class="contact-form">
-        <form method="POST" action="/submit-contact">
+        <form method="POST" action="{{ url_for('submit_contact') }}">
           <input type="text" name="name" placeholder="Your Name" required>
           <input type="email" name="email" placeholder="Your Email" required>
           <input type="tel" name="phone" placeholder="Your Phone Number">
@@ -236,18 +70,22 @@
           <button type="submit">Send Message</button>
         </form>
       </div>
+      
+
       <div class="contact-details">
         <h3>Contact Information</h3>
-        <p><strong>📍 Address:</strong> Sector 21, Delhi, India</p>
-        <p><strong>📞 Phone:</strong> +91 98765 43210</p>
-        <p><strong>✉️ Email:</strong> info@smartcoaching.com</p>
-        <p><strong>⏰ Hours:</strong> Mon - Sat, 9am - 7pm</p>
+        <p><strong>📍 Address:</strong> RZ 3 RAJNAGAR PART 1 ,DADA CHATTRIWALA MARG ,NEW DELHI</p>
+        <p><strong>📞 Phone:</strong> +91 9911216943</p>
+        <p><strong>✉️ Email:</strong> support4ois@gmail.com</p>
+        <p><strong>⏰ Hours:</strong> Mon - Sat, 9am - 9pm</p>
 
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1752.1968201429184!2d77.0452459580401!3d28.594728052305816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d05a70e896921%3A0x4c72ae7a09b4f6b9!2sSector%2021%2C%20Dwarka%2C%20Delhi!5e0!3m2!1sen!2sin!4v1718021921692!5m2!1sen!2sin"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224345.05697669145!2d77.0428989390625!3d28.52735165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b76249b6d%3A0x8673a5a73e44046d!2sDelhi%2C%20India!5e0!3m2!1sen!2sin!4v1718228399709!5m2!1sen!2sin"
+  allowfullscreen=""
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade"
+  style="width:100%; height:250px; border:0;">
+</iframe>
       </div>
     </div>
   </section>
@@ -255,19 +93,46 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-content">
-      <p>Contact Us:</p>
-      <div class="social-icons">
-        <a href="https://wa.me/919876543210" target="_blank" aria-label="WhatsApp">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
-        </a>
-        <a href="https://www.facebook.com/yourpage" target="_blank" aria-label="Facebook">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-        </a>
-        <a href="https://twitter.com/yourhandle" target="_blank" aria-label="Twitter">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
-        </a>
+      <div class="footer-column">
+        <h3>OM INFO SOLUTIONS</h3>
+        <p>Partner with OM INFO SOLUTIONS and unlock the full potential of technology to propel your business forward. Let's embark on a journey of innovation, growth, and success together.</p>
       </div>
-      <p>&copy; 2025 Smart Coaching. All rights reserved.</p>
+
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/courses">Courses</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="#">Training & Internship</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Important Links</h4>
+        <ul>
+          <li><a href="#">Terms and Conditions</a></li>
+          <li><a href="#">Legal</a></li>
+          <li><a href="#">Business</a></li>
+          <li><a href="#">Partners</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Let’s Connect!</h4>
+        <p>We are passionate about driving success through technology.</p>
+        <div class="social-icons">
+          <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="24"></a>
+          <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter" width="24"></a>
+          <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" width="24"></a>
+          <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" width="24"></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 OM Info Solutions. Powered by OM Info.</p>
     </div>
   </footer>
 
