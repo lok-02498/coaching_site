@@ -190,27 +190,25 @@ header nav a:hover {
     }
      /* Humanoid tech section */
   .jumbotron-section {
-  background-color: #f8f9fa;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(72, 183, 239, 0.9);
-  margin-bottom: 50px;
-  padding: 40px 20px;
+    background-color: #f8f9fa; /* Custom background if not overridden by bg-light */
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(72, 183, 239, 0.9);
+    margin-bottom: 50px;
+    padding: 40px 20px;
 }
 
-/* Image adjustments for responsiveness */
 .jumbotron-section img {
-  max-width: 100%;
-  max-height: 400px;
-  height: auto;
-  border-radius: 12px;
-  object-fit: cover;
+    max-width: 100%;
+    max-height: 400px; /* Limit height for larger images */
+    height: auto; /* Ensure aspect ratio is maintained */
+    border-radius: 12px;
+    object-fit: cover; /* Crop to fit container */
 }
 
-/* Heading styling */
 .jumbotron-section h1 {
-  color: #0d6efd;
-  font-size: 2.5rem;
-  line-height: 1.2;
+    color: #0d6efd; /* Bootstrap primary blue */
+    font-size: 2.5rem; /* Default large size */
+    line-height: 1.2;
 }
 
 /* Responsive tweaks */
@@ -228,49 +226,67 @@ header nav a:hover {
   }
 }
 
-        .courses-section {
-    padding: 60px 400px;
+       .courses-section {
+    padding: 60px 20px; /* Reduced horizontal padding for all screens */
     background: url('../static/images/humanoid.avif') no-repeat center center/cover;
     text-align: center;
-    color: white;
+    color: white; /* Ensure text is visible on background image */
     position: relative;
-  }
+    margin-top: 50px; /* Space from Jumbotron, adjust as needed */
+}
 
-      .courses-section h2 {
-        color: #004080;
-        margin-bottom: 40px;
-      }
+/* Overlay for background image to improve text readability */
+.courses-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+    z-index: 0; /* Below content */
+}
 
-      .course-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
-        max-width: 1100px;
-        margin: 0 auto;
-      }
+.courses-section h2 {
+    color: white; /* Changed to white for visibility on dark overlay */
+    margin-bottom: 40px;
+    position: relative; /* Bring h2 above the overlay */
+    z-index: 1;
+}
 
-      .course-card {
-        background: #004080;
-        color: white;
-        border-radius: 12px;
-        padding: 25px 20px;
-        box-shadow: 0 8px 25px rgba(0, 64, 128, 0.3);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        cursor: pointer;
-      }
+.course-grid {
+    display: grid;
+    /* Responsive grid: columns will automatically fit, min width 250px, otherwise 1fr */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px; /* Slightly reduced gap */
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative; /* Bring grid above overlay */
+    z-index: 1;
+}
 
-      .course-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 40px rgba(0, 64, 128, 0.5);
-      }
+.course-card {
+    background: rgba(0, 64, 128, 0.9); /* Slightly transparent background */
+    color: white;
+    border-radius: 12px;
+    padding: 20px 15px; /* Reduced padding */
+    box-shadow: 0 8px 25px rgba(0, 64, 128, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
 
-      .course-title {
-        font-size: 1.5rem;
-        margin-bottom: 12px;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-      }
+.course-card:hover {
+    transform: translateY(-8px); /* Slightly less intense hover */
+    box-shadow: 0 12px 30px rgba(0, 64, 128, 0.6);
+}
+
+.course-title {
+    font-size: 1.4rem; /* Adjusted font size */
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
       /* Animations */
       @keyframes fadeInDown {
