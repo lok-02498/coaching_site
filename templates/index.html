@@ -124,12 +124,14 @@
   <div class="container">
     <div class="row align-items-center">
       <!-- Image Column -->
-      <div class="col-md-6 mb-4 mb-md-0">
-        <img src="static/images/humanoid-robot.jpg" alt="Jumbotron Image" class="img-fluid rounded shadow">
+      <div class="col-md-6 mb-4 mb-md-0 text-center">
+        <img src="{{ url_for('static', filename='images/humanoid-robot.jpg') }}" alt="Jumbotron Image" class="img-fluid rounded shadow">
       </div>
       <!-- Text Column -->
       <div class="col-md-6 text-center text-md-start">
-        <h1 class="display-4 fw-bold mb-3"><center>Welcome <br>To<br>  OM INFO SOLUTIONS </center></ h1>
+        <h1 class="display-5 fw-bold mb-3">
+          Welcome<br>To<br>OM INFO SOLUTIONS
+        </h1>
         <p class="lead mb-4">
           Unlock your potential with our expert-led courses in IT, software, hardware, and more. Join us for hands-on learning and career growth.
         </p>
@@ -138,6 +140,7 @@
     </div>
   </div>
 </section>
+
       <section class="courses-section" >
     <h2>Our Computer Courses</h2>
     <div class="course-grid">
@@ -184,37 +187,41 @@
     </div>
     
     </section>
-  <section class="features-section">
-  <div class="container my-5"> <div class="row justify-content-center g-4"> <div class="col-12 col-md-6 col-lg-3 d-flex"> <div class="feature-card flex-fill"> <img src="https://img.icons8.com/ios-filled/50/1E90FF/online-support.png" alt="Online Support Icon" />
+  <section class="features-section py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center mb-5">Our Key Features</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      <div class="col d-flex">
+        <div class="feature-card w-100">
+          <img src="https://img.icons8.com/ios-filled/50/1E90FF/online-support.png" alt="Support Icon" />
           <h3>Expert-Led Learning</h3>
-          <p>Learn from certified instructors through hands-on sessions in software, hardware, and more.</p>
+          <p>Learn from certified instructors with real-world experience.</p>
         </div>
       </div>
-
-      <div class="col-12 col-md-6 col-lg-3 d-flex">
-        <div class="feature-card flex-fill">
-          <img src="https://img.icons8.com/ios-filled/50/1E90FF/developer.png" alt="Developer Icon" />
-          <h3>Industry-Ready Skills</h3>
-          <p>Real-world IT training including Web Dev, Tally, and Cloud tools.</p>
+      <div class="col d-flex">
+        <div class="feature-card w-100">
+          <img src="https://img.icons8.com/ios-filled/50/1E90FF/classroom.png" alt="Classroom Icon" />
+          <h3>Hands-on Training</h3>
+          <p>Interactive sessions with practical projects and case studies.</p>
         </div>
       </div>
-
-      <div class="col-12 col-md-6 col-lg-3 d-flex">
-        <div class="feature-card flex-fill">
-          <img src="https://img.icons8.com/ios-filled/50/1E90FF/laptop.png" alt="Laptop Icon" />
-          <h3>Flexible Learning Modes</h3>
-          <p>Online or in-person classes, recorded sessions, digital notes, 24/7 support.</p>
+      <div class="col d-flex">
+        <div class="feature-card w-100">
+          <img src="https://img.icons8.com/ios-filled/50/1E90FF/book-shelf.png" alt="Curriculum Icon" />
+          <h3>Comprehensive Curriculum</h3>
+          <p>Courses tailored to meet industry demands and certifications.</p>
         </div>
       </div>
-
-      <div class="col-12 col-md-6 col-lg-3 d-flex">
-        <div class="feature-card flex-fill">
-          <img src="https://img.icons8.com/ios-filled/50/1E90FF/certificate.png" alt="Certificate Icon" />
-          <h3>Certified Courses</h3>
-          <p>Government-recognized, ISO-certified certificates for better career chances.</p>
+      <div class="col d-flex">
+        <div class="feature-card w-100">
+          <img src="https://img.icons8.com/ios-filled/50/1E90FF/handshake.png" alt="Support Icon" />
+          <h3>Career Support</h3>
+          <p>Resume building, interview prep, and placement assistance.</p>
         </div>
       </div>
     </div>
+  </div>
+
 
    <a href="/contact" class="enquiry-button" title="Quick Enquiry">&#10097; QUICK ENQUIRY</a>
     </div>
