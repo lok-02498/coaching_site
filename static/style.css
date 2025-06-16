@@ -1,13 +1,10 @@
-    body {
-      font-family: Arial;
-      background: #f5f8fc;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-    padding-top: 124px; /* Adjust this to control the gap */
-  }
-
+body {
+  font-family: Arial;
+  background: #f5f8fc;
+  margin: 0;
+  padding: 0;
+  padding-top: 130px; /* Adds space below fixed top-bar + header */
+}
 
 
 .top-bar {
@@ -861,4 +858,7 @@ header nav a:hover {
 
 .employee-carousel:hover {
   box-shadow: 0 0 30px rgba(255, 0, 225, 0.9);
+}
+.navbar-collapse {
+  transition: none !important; /* Removes overlay lag */
 }
