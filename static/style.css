@@ -6,8 +6,16 @@ body {
   padding-top: 130px; /* Adds space below fixed top-bar + header */
 }
 
+  @media (max-width: 768px) {
+    header {
+      position: static !important;
+    }
+  }
 
-.top-bar {
+
+
+
+@media (max-width: 576px){.top-bar {
   background-color: #00264d;
   color: #fff;
   padding: 8px 20px;
@@ -16,7 +24,7 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-
+}
 .contact-info span {
   margin-right: 18px;
 }
