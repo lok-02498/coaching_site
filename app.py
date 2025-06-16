@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, flash, render_template, session, url_for,jsp
+from flask import Flask, request, redirect, flash, render_template, session, url_for
 from flask_mail import Mail, Message
 from flask_mysqldb import MySQL
 from flask_mail import Mail, Message
