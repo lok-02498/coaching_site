@@ -5,7 +5,7 @@
       padding: 0;
     }
     body {
-    padding-top: 140px; /* Adjust this to control the gap */
+    padding-top: 124px; /* Adjust this to control the gap */
   }
 
 
@@ -138,13 +138,7 @@ header nav a:hover {
   padding-top: 15px;
   font-size: 14px;
 }
-    /* --- Custom Carousel Styling --- */
-    /* Reduce image height and ensure good fit */
-    .carousel-img-fit {
-      height: 400px; /* Adjust this value for your desired height */
-      width: 1200px; /* Crucial: crops the image to cover the area without distortion */
-    }
-
+  
     /* Adjust padding for the header to avoid overlap with content */
     header {
       padding: 20px 0; /* Adjust padding as needed */
@@ -736,10 +730,7 @@ header nav a:hover {
     }
     /*this for the about.html*/
 
-    .carousel-item {
-     
-      text-align: center;
-    }
+  
 
     .employee-img {
       width: 160px;
@@ -824,20 +815,50 @@ header nav a:hover {
       display: block;
     }
 
-.carousel,
-.carousel-inner,
-.carousel-item,
-.carousel-item img {
-  height: 100vh; 
- 
-         /* Full height of the browser window */
-         /* Full width of the browser window */
+/* ========== Main Carousel (index.html) ========== */
+.main-carousel .carousel-inner,
+.main-carousel .carousel-item {
+  height: 100vh;
 }
 
-.carousel-item img {
-  object-fit: contain;      /* Crops the image while preserving aspect ratio */
+.main-carousel .carousel-item img {
+  width: 100%;
+  height: 100vh;
+  object-fit: contain;
   object-position: center;
-  background-color: #e3eaf1;
+}
 
+/* ========== Employee Carousel (team.html) ========== */
+/* === Scoped to employee carousel === */
+.employee-carousel .carousel-item {
+  padding: 40px;
+  background-color: #f8f9fa;
+  border-radius: 15px;
+}
 
+.employee-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #0d6efd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.main-carousel-img-glow {
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 0, 225, 0.9); /* Blue glow */
+  transition: box-shadow 0.5s ease-in-out;
+}
+
+.main-carousel:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 225, 0.9);
+}
+.employee-carousel-img-glow {
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 0, 225, 0.9); /* Blue glow */
+  transition: box-shadow 0.5s ease-in-out;
+}
+
+.employee-carousel:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 225, 0.9);
 }
