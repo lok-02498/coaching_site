@@ -794,19 +794,19 @@ header nav a:hover {
 .about-content {
     position: relative; /* Ensures content is on top of overlay */
     z-index: 1; /* Puts it above the overlay */
-    color: rgb(64, 8, 248); /* Make text white to be readable on dark overlay */
+    color: rgb(245, 243, 250); /* Make text white to be readable on dark overlay */
     text-align: center;
 }
 
 .about-content h2 {
-    color: rgb(9, 13, 248); /* Ensure heading is white */
-    font-size: 2.5rem;
-    font-weight: 900; /* As previously set */
+    color: rgb(232, 232, 240); /* Ensure heading is white */
+    font-size: 4rem;
+    font-weight: 1000; /* As previously set */
     text-shadow: 0 0 10px rgba(180, 255, 0, 0.7); /* Keep the glow effect */
 }
 
 .about-content p {
-    color: #1c0cf0; /* Off-white for paragraphs for better readability */
+    color: #f4f4f8; /* Off-white for paragraphs for better readability */
     font-size: 1.1rem;
     line-height: 1.6;
     font-weight: 600; /* As previously set */
@@ -815,7 +815,7 @@ header nav a:hover {
 /* Adjustments for counters and accordion to be readable on video */
 .counters .counter-box p,
 .accordion-header {
-    color: rgb(56, 10, 241); /* Ensure counter text and accordion headers are white */
+    color: rgb(54, 9, 235); /* Ensure counter text and accordion headers are white */
 }
 .accordion-content p {
     color: #3003fa; /* Light gray for accordion content */
@@ -930,12 +930,12 @@ header nav a:hover {
 }
 .main-carousel-img-glow {
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255, 0, 225, 0.9); /* Blue glow */
+  box-shadow: 0 0 20px rgba(4, 56, 244, 0.9); /* Blue glow */
   transition: box-shadow 0.5s ease-in-out;
 }
 
 .main-carousel:hover {
-  box-shadow: 0 0 30px rgba(255, 0, 225, 0.9);
+  box-shadow: 0 0 30px rgba(5, 41, 240, 0.9);
 }
 
 /* ========== Employee Carousel (team.html) ========== */
@@ -957,12 +957,12 @@ header nav a:hover {
 
 .employee-carousel-img-glow {
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(255, 0, 225, 0.9); /* Blue glow */
+  box-shadow: 0 0 20px rgba(87, 87, 245, 0.9); /* Blue glow */
   transition: box-shadow 0.5s ease-in-out;
 }
 
 .employee-carousel:hover {
-  box-shadow: 0 0 30px rgba(255, 0, 225, 0.9);
+  box-shadow: 0 0 30px rgba(74, 66, 223, 0.9);
 }
 .navbar-collapse {
   transition: none !important; /* Removes overlay lag */
