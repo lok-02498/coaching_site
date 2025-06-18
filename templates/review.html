@@ -14,21 +14,8 @@
 <body>
  
 
- <!-- Top Bar (Fixed) -->
 <div class="top-bar fixed-top bg-dark text-white d-flex justify-content-between px-4 py-2" style="z-index: 1040;">
   <div class="contact-info">
-    <span class="me-3">📞 +91 9911216943</span>
-    <span>✉️ support4ois@gmail.com</span>
-  </div>
-  <div class="auth-links">
-    <a href="/login" class="btn btn-sm btn-outline-light me-2">Login</a>
-    <a href="/register" class="btn btn-sm btn-light text-primary">Register</a>
-  </div>
-</div>
-
-<!-- Main Header (below top-bar, also fixed) -->
-<div class="top-bar fixed-top bg-dark text-white d-flex flex-wrap justify-content-between align-items-center px-4 py-2" style="z-index: 1040;">
-  <div class="contact-info mb-2 mb-md-0">
     <span class="me-3">📞 +91 9911216943</span>
     <span>✉️ support4ois@gmail.com</span>
   </div>
@@ -50,9 +37,10 @@
       </a>
 
       <!-- Toggle button for mobile -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+
 
       <!-- Navigation links -->
       <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
@@ -69,83 +57,138 @@
 </header>
 
 
-  <!-- Testimonials -->
-  <section class="testimonial-section">
-    <h2>What Our Students Say</h2>
-    <p class="subtitle">Real experiences from students who've transformed their careers with OM INFO SOLUTIONS</p>
+    <!-- Feedback Button -->
+<button class="btn btn-primary mt-5 ms-4" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+  <i class="fas fa-comment"></i> Leave a Review
+</button>
 
-    <div class="testimonial-container">
-      <!-- Repeat testimonial-card blocks here -->
-      <div class="testimonial-card">
-        <img src="static/images/lokeshpicture.jpg" alt="Student">
-        <h4>Lokesh Deshwal</h4>
-        <span class="course">Full Stack Web Development</span>
-        <div class="stars">
-          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-          <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-        </div>
-        <p>The instructors were amazing! I landed my first internship within two months of joining.</p>
+
+<!-- Feedback Modal -->
+<div id="feedbackModal" class="modal fade" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content shadow-lg border-0 rounded-4">
+      <div class="modal-header bg-primary text-white rounded-top-4">
+        <h5 class="modal-title" id="feedbackModalLabel"><i class="fas fa-star me-2"></i>Submit Your Review</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <!-- Add more testimonial cards as needed -->
-    </div>
-  </section>
+      <form id="popupFeedbackForm" method="POST" action="/submit-feedback">
+        <div class="modal-body px-4">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label"><b>Name</b></label>
+              <input type="text" name="name" class="form-control rounded-3" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label"><b>Course</b></label>
+              <input type="text" name="course" class="form-control rounded-3" required>
+            </div>
 
-  <!-- Feedback Button -->
-  <button id="openModalBtn" class="cloud-feedback-btn">
-    <i class="fas fa-cloud"></i> Feedback
-  </button>
+      <div class="col-12">
+  <label class="form-label"><b>Rating</b></label>
+  <div class="star-rating d-flex flex-row-reverse justify-content-end gap-1">
+    {% for i in range(5, 0, -1) %}
+      <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" required hidden>
+      <label for="star{{ i }}" class="star fs-2 text-secondary" title="{{ i }} stars">&#9733;</label>
+    {% endfor %}
+  </div>
+</div>
 
-  <!-- Feedback Modal -->
-  <div id="feedbackModal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" id="closeModalBtn">&times;</span>
-      <h2 style="color: #1E90FF;">Submit Your Feedback</h2>
-      <form id="popupFeedbackForm">
-        <label>Name</label>
-        <input type="text" name="name" required>
 
-        <label>Course</label>
-        <input type="text" name="course" required>
-
-        <label>Rating</label>
-        <div class="stars">
-          <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
-          <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
-          <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
-          <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
-          <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+            <div class="col-12">
+              <label class="form-label"><b>Review</b></label>
+              <textarea name="review" class="form-control rounded-3" rows="4" required></textarea>
+            </div>
+          </div>
         </div>
-
-        <label>Feedback</label>
-        <textarea name="review" rows="4" required></textarea>
-
-        <button type="submit">Submit</button>
-        <div id="formMessage"></div>
+        <div class="modal-footer px-4 py-3 bg-light rounded-bottom-4">
+          <button type="submit" class="btn btn-primary rounded-pill px-4">Submit</button>
+          <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+        </div>
       </form>
     </div>
   </div>
+</div>
 
-  <script>
-    const openBtn = document.getElementById("openModalBtn");
-    const closeBtn = document.getElementById("closeModalBtn");
-    const modal = document.getElementById("feedbackModal");
+<div class="container mt-5" style="max-width: 600px;">
+  <h3 class="mb-5">Our Students Say It Better Than We Do!🌟</h3>
+  <div id="feedback-list">
+    {% for fb in feedbacks %}
+    <div class="border rounded p-3 mb-4 shadow-sm review-card" {% raw %}style="display: {{ 'block' if loop.index <= 3 else 'none' }};"{% endraw %}>
+      <div class="d-flex align-items-center mb-2">
+        <img src="{{ url_for('static', filename='images/userimage.jpg') }}" alt="Smiling student profile photo in a circular frame, neutral background, used to represent the reviewer" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+        <div>
+          <h6 class="mb-0 fw-bold">{{ fb.name }}</h6>
+          <small class="text-muted">{{ fb.course }}</small><br>
+          <small class="text-muted">{{ fb.created_at }}</small>
+        </div>
+      </div>
+      <div class="mb-2 text-warning">
+        {% for i in range(fb.rating) %}
+          <i class="fas fa-star"></i>
+        {% endfor %}
+        {% for i in range(5 - fb.rating) %}
+          <i class="far fa-star"></i>
+        {% endfor %}
+      </div>
+      <p class="mb-1">{{ fb.review }}</p>
+    </div>
+    {% endfor %}
+  </div>
 
-    openBtn.onclick = () => modal.style.display = "block";
-    closeBtn.onclick = () => modal.style.display = "none";
-    window.onclick = (e) => {
-      if (e.target === modal) modal.style.display = "none";
-    };
+  {% if feedbacks|length > 3 %}
+  <div class="text-center">
+    <button id="loadMoreBtn" class="btn btn-outline-primary px-4">Load More Reviews</button>
+  </div>
+  {% endif %}
+</div>
 
-    document.getElementById("popupFeedbackForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      document.getElementById("formMessage").textContent = "Thank you for your feedback!";
-      this.reset();
-      setTimeout(() => modal.style.display = "none", 1500);
-    });
-  </script>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const openBtn = document.getElementById("openModalBtn");
+  const modal = document.getElementById("feedbackModal");
+  const closeBtn1 = document.getElementById("closeModalBtn");
+  const closeBtn2 = document.getElementById("closeModalBtn2");
+
+  openBtn.onclick = () => modal.style.display = "block";
+  closeBtn1.onclick = () => modal.style.display = "none";
+  closeBtn2.onclick = () => modal.style.display = "none";
+
+  window.onclick = (e) => {
+    if (e.target === modal) modal.style.display = "none";
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/4.0.2/timeago.min.js"></script>
+<script>
+  timeago.render(document.querySelectorAll('time'));
+</script>
+<script>
+  const reviews = document.querySelectorAll('.review-card');
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  let visibleCount = 3;
+  const increment = 3;
+
+  loadMoreBtn?.addEventListener('click', () => {
+    let hidden = 0;
+    for (let i = visibleCount; i < visibleCount + increment && i < reviews.length; i++) {
+      reviews[i].style.display = 'block';
+      hidden++;
+    }
+    visibleCount += hidden;
+
+    if (visibleCount >= reviews.length) {
+      loadMoreBtn.style.display = 'none';
+    }
+  });
+</script>
+
+
+
+
+
+
 <footer class="footer">
   <div class="footer-content">
     <div class="footer-column">
@@ -181,7 +224,7 @@
         <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
         <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
         <a href="https://www.youtube.com/@ominfosolutionsois2426" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
-        <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
+        <a href="https://www.linkedin.com/in/lokesh-deshwal-820528351/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
       </div>
     </div>
   </div>
@@ -191,5 +234,7 @@
     <p>&copy; 2025 om info solutions. Powered by om info.</p>
   </div>
 </footer>
+
+
 </body>
 </html>

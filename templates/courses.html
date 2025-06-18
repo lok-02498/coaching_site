@@ -9,10 +9,8 @@
 </head>
 
 <body>
- 
 
-
-  <!-- Top Contact and Auth Bar -->
+ <!-- Top Contact and Auth Bar -->
  <!-- Top Bar (Fixed) -->
 <div class="top-bar fixed-top bg-dark text-white d-flex justify-content-between px-4 py-2" style="z-index: 1040;">
   <div class="contact-info">
@@ -36,11 +34,6 @@
         <h2 class="mb-0 h5 fw-bold">OM INFO SOLUTIONS</h2>
       </a>
 
-      <!-- Toggle button for mobile -->
-     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
-
 
       <!-- Navigation links -->
       <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
@@ -55,16 +48,30 @@
     </nav>
   </div>
 </header>
+<!-- Spacer to avoid overlapping fixed header -->
+<div class="mt-4 pt-4"></div>
 
+<!-- Flash messages wrapper -->
+<div class="container px-4">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+</div>
 
-
-
-  <!-- Courses Section with Grayscale-to-Color Hover Effect -->
-  <section class="course-section ">
-    <div class="container-fluid px-4">
-      <div class="courses-content">
-        <h2 style="text-align:center;">Explore Our Popular Courses</h2>
-        <div class="course-grid">
+<!-- Courses Section with Grayscale-to-Color Hover Effect -->
+<section class="course-section ">
+  <div class="container-fluid px-4">
+    <div class="courses-content">
+      <h2 style="text-align:center;">Explore Our Popular Courses</h2>
+      <div class="course-grid">
           {% for course in courses %}
         <div class="course-card">
           <div class="image-wrapper">
@@ -74,7 +81,8 @@
             <h3 class="course-title">{{ course.title }}</h3>
             <p class="course-meta">Duration: {{ course.duration }} | Level: {{ course.level }} | Fee: ₹{{ course.fee }}</p>
             <p class="course-description">{{ course.description }}</p>
-           <a href="{{ url_for('admission_form', slug=course.slug) }}" class="enroll-btn">Enroll Now</a>
+           <a href="{{ url_for('admission_slug', slug=course.slug) }}" class="enroll-btn">Enroll Now</a>
+
 
           </div>
         </div>
@@ -83,6 +91,9 @@
     </div>
   </section>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/your-own-kit-code.js" crossorigin="anonymous"></script>
+
 
 <footer class="footer">
   <div class="footer-content">
@@ -119,7 +130,7 @@
         <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"></a>
         <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter"></a>
         <a href="https://www.youtube.com/@ominfosolutionsois2426" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube"></a>
-        <a href="#" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
+        <a href="https://www.linkedin.com/in/lokesh-deshwal-820528351/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn"></a>
       </div>
     </div>
   </div>
