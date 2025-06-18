@@ -1,0 +1,4 @@
+PassengerEnabled on
+PassengerAppEnv production
+PassengerPython /usr/bin/python3
+PassengerAppRoot /home/c6dym0vo1apt/public_html
