@@ -22,12 +22,13 @@ mail = Mail(app)
 # ---------- MySQL Connection ----------
 def get_db_connection():
     return mysql.connector.connect(
-        host='mysql.railway.internal',
-        user='root',
-        password='YEHgArrDRnRNxaOQbFVGVbnmqfjoiUTiJ',  # Replace with actual password
-        port=3306,
-        database='railway'
+        host='p3plzcpnl509598.prod.phx3.secureserver.net',        # e.g., mysql123.secureserver.net
+        user='flaskuser',        # e.g., ois_user
+        password='KRIshna2005',# your db user password
+        database='ois',    # e.g., ois
+        port=3306
     )
+
 
 
 # ---------- Routes ----------
