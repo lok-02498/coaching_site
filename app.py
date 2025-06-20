@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 import os
 import io
 import mysql.connector
-from flask_bcrypt import Bcrypt
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -51,7 +51,7 @@ def index():
 @app.route('/about')
 def about():
     if 'username' not in session:
-        flash("Please log in to view this page", "error")
+        flash("Please log in to view about ", "error")
         return redirect(url_for('cover'))
     return render_template('about.html')
 
@@ -127,7 +127,7 @@ def submit_admission():
 @app.route('/contact')
 def contact():
     if 'username' not in session:
-        flash("Please log in to view this page", "error")
+        flash("Please log in to view contact ", "error")
         return redirect(url_for('cover'))
     return render_template('contact.html')
 
@@ -168,7 +168,7 @@ from flask import flash, redirect, url_for, session, render_template
 @app.route('/review')
 def review_page():
     if 'username' not in session:
-        flash("Please log in to view the reviews page.", "error")
+        flash("Please log in to view the reviews.", "error")
         return redirect(url_for('cover'))  # Redirect to cover page if not logged in
 
     conn = get_db_connection()
@@ -204,58 +204,93 @@ def submit_feedback():
     conn.close()
     flash('Thank you for your feedback!', 'success')
     return redirect('/review')
-@app.route('/login', methods=['POST'])
-def login():
+@app.route('/dashboard')
+def dashboard():
+    if 'username' not in session or session.get('role') != 'admin':
+        flash("Access denied. Admins only.", "error")
+        return redirect(url_for('cover'))
+    return render_template('admin_dashboard.html')
+
+@app.route('/login/student', methods=['POST'])
+def login_student():
     username = request.form['username']
     password = request.form['password']
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-
-    cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+    cursor.execute("SELECT * FROM users WHERE username = %s AND role = 'student'", (username,))
     user = cursor.fetchone()
-
     cursor.close()
     conn.close()
 
     if user and bcrypt.check_password_hash(user['password'], password):
         session['username'] = user['username']
+        session['role'] = user['role']
+        flash('Student login successful', 'success')
         return redirect(url_for('cover'))
     else:
-        flash('Invalid username or password', 'error')
+        flash('Invalid student credentials', 'error')
         return redirect(url_for('cover'))
 
-
-@app.route('/signup', methods=['POST'])
-def signup():
+@app.route('/login/admin', methods=['POST'])
+def login_admin():
     username = request.form['username']
     password = request.form['password']
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM users WHERE username = %s AND role = 'admin'", (username,))
+    user = cursor.fetchone()
+    cursor.close()
+    conn.close()
 
-    # Check if user exists
+    if user and bcrypt.check_password_hash(user['password'], password):
+        session['username'] = user['username']
+        session['role'] = user['role']
+        flash('Admin login successful', 'success')
+        return redirect(url_for('dashboard'))
+    else:
+        flash('Invalid admin credentials', 'error')
+        return redirect(url_for('cover'))
+
+
+@app.route('/signup/student', methods=['POST'])
+def signup_student():
+    username = request.form['username']
+    password = request.form['password']
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
     if cursor.fetchone():
+        flash('Username already exists', 'error')
         cursor.close()
         conn.close()
-        flash('Username already exists', 'error')
         return redirect(url_for('cover'))
 
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    cursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
+    cursor.execute("INSERT INTO users (username, password, role) VALUES (%s, %s, 'student')",
+                   (username, hashed_password))
     conn.commit()
     cursor.close()
     conn.close()
 
     session['username'] = username
-    flash('Signup successful', 'success')
+    session['role'] = 'student'
+    flash('Signup successful as student', 'success')
     return redirect(url_for('cover'))
+
+
+
+
+
 @app.route('/logout')
 def logout():
-    session.pop('username', None)
+    session.clear()
     flash('You have been logged out.', 'success')
     return redirect(url_for('cover'))
+
+
 
 
 
