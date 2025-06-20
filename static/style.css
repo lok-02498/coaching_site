@@ -951,37 +951,47 @@ header nav a:hover {
 /*this is for the cover.html */
 /* ---- Cover Page Specific Styles ---- */
 
+/* Base Cover Page Styling */
 body.cover-page {
-  height: 100vh;
   margin: 0;
-  background: url('/static/images/humanoid.avif') no-repeat center center fixed;
+  padding: 0;
+  min-height: 100vh;
+  background: url('/static/images/humanoid.avif') no-repeat center center;
   background-size: cover;
+  background-attachment: scroll; /* ✅ mobile-safe */
   color: rgba(252, 253, 252, 0.858);
   overflow-x: hidden;
-  overflow-y: hidden; /* Prevent vertical scroll */
 }
 
-/* Spacer height = Top bar (44px) + Header bar (~76px) */
-
+/* Spacer height = Top bar (44px) + Header (56px or more) */
+.header-spacer {
+  height: 100px;
+}
 
 /* Cover container layout */
 .cover-container {
-  height: calc(100vh - 100px);
+  min-height: calc(100vh - 100px); /* Space for top + header bars */
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   padding: 2rem;
-  background-color: rgba(9, 13, 241, 0.237);
+  background-color: rgba(9, 13, 241, 0.2); /* Soft overlay */
+  overflow: hidden;
 }
 
-/* Align logo + text in header correctly */
+/* Align logo + brand text in header */
 .navbar-brand {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 1rem;
   margin-bottom: 0 !important;
+}
+
+/* Responsive logo height */
+.navbar-brand img {
+  height: 40px;
 }
 
 /* Glowing button effect */
@@ -991,12 +1001,12 @@ body.cover-page {
 }
 
 .glow-button:hover {
-  box-shadow: 0 0 15px 5px rgba(236, 224, 231, 0.8), 
+  box-shadow: 0 0 15px 5px rgba(236, 224, 231, 0.8),
               0 0 25px 10px rgba(8, 115, 229, 0.6);
   transform: translateY(-2px);
 }
 
-/* Glowing text effect */
+/* Glowing text */
 .glowing-text {
   text-shadow: 0 0 10px rgba(180, 255, 0, 0.7),
                0 0 20px rgba(255, 0, 255, 0.5);
@@ -1014,4 +1024,29 @@ body.cover-page {
   color: #ccc;
   font-size: 0.9rem;
   margin-top: auto;
+}
+
+/* 🔧 MOBILE OPTIMIZATIONS */
+@media (max-width: 768px) {
+  body.cover-page {
+    background-attachment: scroll; /* override fixed */
+    background-position: center top;
+  }
+
+  .cover-container {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .navbar-brand {
+    font-size: 0.9rem;
+  }
+
+  .navbar-toggler {
+    margin-left: auto;
+  }
+
+  .header-spacer {
+    height: 90px; /* Slightly tighter on mobile */
+  }
 }
