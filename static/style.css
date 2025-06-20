@@ -3,7 +3,7 @@ body {
   background: #f5f8fc;
   margin: 0;
   padding: 0;
-  padding-top: 130px; /* Adds space below fixed top-bar + header */
+  padding-top: 90px; /* Adds space below fixed top-bar + header */
 }
 
   @media (max-width: 768px) {
@@ -942,4 +942,76 @@ header nav a:hover {
   font-weight: 500;
   font-size: 1rem;
   border-left: 5px solid #198754; /* Bootstrap green for success */
+}
+@media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1rem !important;
+  }
+}
+/*this is for the cover.html */
+/* ---- Cover Page Specific Styles ---- */
+
+body.cover-page {
+  height: 100vh;
+  margin: 0;
+  background: url('/static/images/humanoid.avif') no-repeat center center fixed;
+  background-size: cover;
+  color: rgba(252, 253, 252, 0.858);
+  overflow-x: hidden;
+  overflow-y: hidden; /* Prevent vertical scroll */
+}
+
+/* Spacer height = Top bar (44px) + Header bar (~76px) */
+
+
+/* Cover container layout */
+.cover-container {
+  height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(9, 13, 241, 0.237);
+}
+
+/* Align logo + text in header correctly */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  margin-bottom: 0 !important;
+}
+
+/* Glowing button effect */
+.glow-button {
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 5px rgba(243, 32, 194, 0.5);
+}
+
+.glow-button:hover {
+  box-shadow: 0 0 15px 5px rgba(236, 224, 231, 0.8), 
+              0 0 25px 10px rgba(8, 115, 229, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Glowing text effect */
+.glowing-text {
+  text-shadow: 0 0 10px rgba(180, 255, 0, 0.7),
+               0 0 20px rgba(255, 0, 255, 0.5);
+  transition: text-shadow 0.3s ease-in-out;
+}
+
+.glowing-text:hover {
+  text-shadow: 0 0 15px rgb(240, 244, 231),
+               0 0 25px rgba(255, 0, 255, 0.8),
+               0 0 40px rgba(255, 0, 255, 0.6);
+}
+
+/* Footer inside cover */
+.cover-container footer {
+  color: #ccc;
+  font-size: 0.9rem;
+  margin-top: auto;
 }

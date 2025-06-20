@@ -4,132 +4,51 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OM Info Solutions | Cover Page</title>
+
+  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: sans-serif;
-       background: url('/static/images/humanoid.avif') no-repeat center center fixed;
-      background-size: cover;
-      color: rgba(252, 253, 252, 0.858);
-      font: weight 500px;
-    }
 
-    .cover-container {
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-      background-color: rgba(9, 13, 241, 0.237); /* semi-transparent overlay */
-    }
-
-    .nav-link {
-      color: rgba(255, 255, 255, 0.8);
-      font-weight: bold;
-    }
-
-    .nav-link.active,
-    .nav-link:hover {
-      color: #f0dceb;
-      text-decoration: underline;
-    }
-
-  
-    .site-title {
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-
-    footer {
-      margin-top: auto;
-      color: #ccc;
-      font-size: 0.9rem;
-    }
-    /* Existing styles... */
-
-.glow-button {
-  transition: all 0.3s ease-in-out; 
-  box-shadow: 0 0 5px rgba(243, 32, 194, 0.5); 
-}
-
-.glow-button:hover {
-  /* Increase shadow and spread on hover for the glow effect */
-  box-shadow: 0 0 15px 5px rgba(236, 224, 231, 0.8), 
-              0 0 25px 10px rgba(8, 115, 229, 0.6);
-  transform: translateY(-2px); 
-}
-
-.glow-button:active {
-  box-shadow: 0 0 8px 2px rgba(245, 236, 236, 0.6);
-  transform: translateY(0);
-}
-
-/* Optional: If you want a pulsating glow effect (more advanced) */
-@keyframes pulse-glow {
-  0% {
-    box-shadow: 0 0 5px rgba(237, 1, 182, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 15px 5px rgba(229, 16, 240, 0.8), 
-                0 0 25px 10px rgba(0, 123, 255, 0.6); 
-  }
-  100% {
-    box-shadow: 0 0 5px rgba(235, 222, 236, 0.5);
-  }
-}
-/* --- "Welcome" Text Glow (Static) --- */
-.glowing-text {
-  /* Initial subtle fluorescent green text glow */
-  text-shadow: 0 0 10px rgba(180, 255, 0, 0.7), /* Lime Green */
-               0 0 20px rgba(255, 0, 255, 0.5); /* Optional: Hot Pink/Magenta secondary glow */
-  transition: text-shadow 0.3s ease-in-out;
-}
-
-.glowing-text:hover {
-  /* Brighter text glow on hover */
-  text-shadow: 0 0 15px rgb(240, 244, 231),
-               0 0 25px rgba(255, 0, 255, 0.8),
-               0 0 40px rgba(255, 0, 255, 0.6);
-} 
- 
-
-
-  </style>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
- <div class="top-bar fixed-top bg-dark text-white d-flex justify-content-between px-4 py-2" style="z-index: 1040;">
-  <div class="contact-info">
-    <span class="me-3">📞 +91 9911216943</span>
-    <span>✉️ support4ois@gmail.com</span>
-  </div>
-  <div class="auth-links">
-    <a href="/login" class="btn btn-sm btn-outline-light me-2">Login</a>
-    <a href="/register" class="btn btn-sm btn-light text-primary">Register</a>
-  </div>
-</div>
 
+<body class="cover-page">
 
-<!-- Main Header (below top-bar, also fixed) -->
+  <!-- ✅ Top Contact and Auth Bar -->
+  <div class="top-bar fixed-top bg-dark text-white d-flex justify-content-between px-4 py-2" style="z-index: 1040;">
+    <div class="contact-info">
+      <span class="me-3">📞 +91 9911216943</span>
+      <span>✉️ support4ois@gmail.com</span>
+    </div>
+    <div class="auth-links">
+      <a href="/login" class="btn btn-sm btn-outline-light me-2">Login</a>
+      <a href="/register" class="btn btn-sm btn-light text-primary">Register</a>
+    </div>
+  </div>
+
+  <!-- ✅ Main Header (Logo + Text + Hamburger) -->
+ <!-- ✅ Main Header (Logo + Text + Hamburger) -->
 <header class="bg-primary text-white" style="position: fixed; top: 44px; width: 100%; z-index: 1030;">
   <div class="container-fluid px-4">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <!-- Logo and Title -->
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <img src="{{ url_for('static', filename='images/cleaned_logo.png') }}" alt="Logo" style="height: 60px;" class="me-2">
-        <h2 class="mb-0 h5 fw-bold">OM INFO SOLUTIONS</h2>
-      </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      
+      <!-- Header Top Row: Logo + Brand + Toggler -->
+      <div class="d-flex justify-content-between align-items-center w-100">
 
-      <!-- Toggle button for mobile -->
-     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
+        <!-- Left: Logo + Text -->
+        <div class="d-flex align-items-center">
+          <img src="{{ url_for('static', filename='images/cleaned_logo.png') }}" alt="Logo" style="height: 40px;" class="me-2">
+          <span class="navbar-brand mb-0 h6 fw-bold">OM INFO SOLUTIONS</span>
+        </div>
 
+        <!-- Right: Hamburger Menu -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
 
-      <!-- Navigation links -->
-      <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+      <!-- Collapsible Nav Links -->
+      <div class="collapse navbar-collapse justify-content-end mt-2 mt-lg-0" id="mainNavbar">
         <ul class="navbar-nav">
           <li class="nav-item"><a href="/" class="nav-link text-white">Home</a></li>
           <li class="nav-item"><a href="/about" class="nav-link text-white">About</a></li>
@@ -138,20 +57,23 @@
           <li class="nav-item"><a href="/review" class="nav-link text-white">Reviews</a></li>
         </ul>
       </div>
+
     </nav>
   </div>
 </header>
 
-  <div class="cover-container ">
-     
+
+  <!-- Spacer to push content below fixed bars -->
+  <div class="header-spacer"></div>
+
+  <!-- ✅ Main Cover Content -->
+  <div class="cover-container">
     <main>
-       <img src="{{ url_for('static', filename='images/cleaned_logo.png') }}" alt="Logo" class="me-3" style="height: 80px;">
-   
-  
+      <img src="{{ url_for('static', filename='images/cleaned_logo.png') }}" alt="Logo" class="me-3" style="height: 80px;">
       <h1 class="display-4 glowing-text">Welcome to OM INFO SOLUTIONS</h1>
       <p class="lead mt-3">Empowering your future with quality education and skills.</p>
       <p class="lead">
-       <a href="/home" class="btn btn-lg btn-light fw-bold border-white bg-white text-dark mt-3 glow-button">Get Started</a>
+        <a href="/home" class="btn btn-lg btn-light fw-bold border-white bg-white text-dark mt-3 glow-button">Get Started</a>
       </p>
     </main>
     <footer class="mt-5">
@@ -159,6 +81,7 @@
     </footer>
   </div>
 
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
