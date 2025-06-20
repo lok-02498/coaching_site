@@ -1089,11 +1089,26 @@ body.cover-page {
   border-radius: 20rem;
 }
 .custom-large-modal {
-  max-width: 400px;/* Increase width */
-  width: 200vw;      /* Responsive width */
+  max-width: 500px;/* Increase width */
+  width: 90vw;      /* Responsive width */
 }
 .modal-content {
   background-color: #ffffff; /* Light background */
   color: #333;               /* Dark text for readability */
   border-radius: 1rem;
+}
+@media (max-width: 400px) {
+  .custom-large-modal {
+    width: 95vw;
+    margin: 0 1rem;
+  }
+
+  .modal-content {
+    padding: 1rem;
+  }
+
+  .custom-btn, .custom-btn-admin {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
 }
