@@ -1,13 +1,18 @@
+from flask_bcrypt import Bcrypt
+from colorama import Cursor
 from flask import Flask, request, redirect, flash, render_template, session, url_for, make_response, send_file
 from flask_mail import Mail, Message
+from psutil import users
 from xhtml2pdf import pisa
 from werkzeug.utils import secure_filename
 import os
 import io
 import mysql.connector
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Use a strong secret key
+app.secret_key = 'your_secret_key'
+bcrypt = Bcrypt(app)  # Use a strong secret key
 
 # ---------- Flask-Mail Configuration ----------
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -36,16 +41,29 @@ def get_db_connection():
 def cover():
     return render_template('cover.html')
 
+@app.route('/index')
 @app.route('/home')
-def home():
+def index():
     return render_template('index.html')
+
+
 
 @app.route('/about')
 def about():
+    if 'username' not in session:
+        flash("Please log in to view this page", "error")
+        return redirect(url_for('cover'))
     return render_template('about.html')
+
 
 @app.route('/courses')
 def show_courses():
+    print("SESSION USERNAME:", session.get('username'))  # Debug
+
+    if 'username' not in session:
+        flash("Please log in to view courses", "error")
+        return redirect(url_for('cover'))
+
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM courses")
@@ -53,6 +71,7 @@ def show_courses():
     cursor.close()
     conn.close()
     return render_template('courses.html', courses=courses)
+
 
 @app.route('/enroll/<slug>')
 def enroll_course(slug):
@@ -107,6 +126,9 @@ def submit_admission():
 
 @app.route('/contact')
 def contact():
+    if 'username' not in session:
+        flash("Please log in to view this page", "error")
+        return redirect(url_for('cover'))
     return render_template('contact.html')
 
 @app.route('/submit-contact', methods=['POST'])
@@ -141,20 +163,28 @@ def submit_contact():
     return redirect('/contact')
 
 
+from flask import flash, redirect, url_for, session, render_template
+
 @app.route('/review')
 def review_page():
+    if 'username' not in session:
+        flash("Please log in to view the reviews page.", "error")
+        return redirect(url_for('cover'))  # Redirect to cover page if not logged in
+
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT name, course, rating, review, created_at FROM feedbacks ORDER BY created_at DESC")
     feedbacks = cursor.fetchall()
-    
+
     for fb in feedbacks:
-        fb['raw_created_at'] = fb['created_at'].isoformat()  # e.g., 2025-06-18T21:45:00
-        fb['created_at'] = fb['created_at'].strftime('%d %b %Y %I:%M %p')  # e.g., 18 Jun 2025 09:45 PM
+        fb['raw_created_at'] = fb['created_at'].isoformat()  # For JS libraries like timeago
+        fb['created_at'] = fb['created_at'].strftime('%d %b %Y %I:%M %p')  # Readable format
 
     cursor.close()
     conn.close()
     return render_template('review.html', feedbacks=feedbacks)
+
+
 
 @app.route('/submit-feedback', methods=['POST'])
 def submit_feedback():
@@ -174,6 +204,60 @@ def submit_feedback():
     conn.close()
     flash('Thank you for your feedback!', 'success')
     return redirect('/review')
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+    user = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    if user and bcrypt.check_password_hash(user['password'], password):
+        session['username'] = user['username']
+        return redirect(url_for('cover'))
+    else:
+        flash('Invalid username or password', 'error')
+        return redirect(url_for('cover'))
+
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    username = request.form['username']
+    password = request.form['password']
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # Check if user exists
+    cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+    if cursor.fetchone():
+        cursor.close()
+        conn.close()
+        flash('Username already exists', 'error')
+        return redirect(url_for('cover'))
+
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    cursor.execute("INSERT INTO users (username, password) VALUES (%s, %s)", (username, hashed_password))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    session['username'] = username
+    flash('Signup successful', 'success')
+    return redirect(url_for('cover'))
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('cover'))
+
+
 
 
 # ---------- Run ----------
