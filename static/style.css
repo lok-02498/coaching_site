@@ -1082,7 +1082,7 @@ body.cover-page {
   position: relative;
 }
 .custom-toast {
-  max-width: 300px;
+  max-width: 800px;
   min-height: 10px;
   font-size: 1.0rem;
   padding: 0.1rem;

@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 import os
 import io
 import mysql.connector
+import random
 
 
 app = Flask(__name__)
@@ -50,9 +51,6 @@ def index():
 
 @app.route('/about')
 def about():
-    if 'username' not in session:
-        flash("Please log in to view about ", "error")
-        return redirect(url_for('cover'))
     return render_template('about.html')
 
 
@@ -126,9 +124,6 @@ def submit_admission():
 
 @app.route('/contact')
 def contact():
-    if 'username' not in session:
-        flash("Please log in to view contact ", "error")
-        return redirect(url_for('cover'))
     return render_template('contact.html')
 
 @app.route('/submit-contact', methods=['POST'])
@@ -167,9 +162,6 @@ from flask import flash, redirect, url_for, session, render_template
 
 @app.route('/review')
 def review_page():
-    if 'username' not in session:
-        flash("Please log in to view the reviews.", "error")
-        return redirect(url_for('cover'))  # Redirect to cover page if not logged in
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
@@ -288,6 +280,37 @@ def signup_student():
 def logout():
     session.clear()
     flash('You have been logged out.', 'success')
+    return redirect(url_for('cover'))
+
+@app.route('/send-email-otp', methods=['POST'])
+def send_email_otp():
+    email = request.form['email']
+    otp = str(random.randint(100000, 999999))
+    session['email_otp'] = otp
+    session['otp_email'] = email
+
+    # Send OTP to email
+    msg = Message(subject='Your OTP for Login', recipients=[email])
+    msg.body = f'Your OTP is: {otp}'
+    mail.send(msg)
+
+    flash('OTP sent to your email!', 'success')
+    return redirect(url_for('cover', show='emailLogin'))
+
+@app.route('/verify-email-otp', methods=['POST'])
+def verify_email_otp():
+    entered_otp = request.form['otp']
+    if entered_otp == session.get('email_otp'):
+        session['username'] = session['otp_email']
+        session['role'] = 'student'  
+        flash('Logged in successfully via OTP!', 'success')
+        return redirect(url_for('cover'))
+    else:
+        flash('Invalid OTP.', 'error')
+        return redirect(url_for('cover', show='emailLogin'))  # Keep modal open
+
+@app.route('/verify-email-otp')
+def verify_email_otp_page():
     return redirect(url_for('cover'))
 
 
