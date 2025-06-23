@@ -219,6 +219,7 @@ Placement Facilities: The institute has link with MNCs and business houses which
   </div>
 </div>
 <!-- RESET PASSWORD MODAL -->
+<!-- RESET PASSWORD MODAL -->
 <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-3 border-0 rounded-4 shadow">
@@ -227,14 +228,19 @@ Placement Facilities: The institute has link with MNCs and business houses which
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        {% if session.get('reset_token') %}
         <form method="POST" action="{{ url_for('reset_password_modal', token=session.get('reset_token')) }}">
           <input type="password" name="password" placeholder="Enter new password" required class="form-control mb-3">
           <button type="submit" class="btn btn-success w-100">Reset Password</button>
         </form>
+        {% else %}
+        <p class="text-danger">The reset link is invalid or expired. Please try again.</p>
+        {% endif %}
       </div>
     </div>
   </div>
 </div>
+
 
 
 <script>

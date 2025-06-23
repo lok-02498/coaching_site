@@ -379,9 +379,11 @@ def reset_password_modal(token):
         email = serializer.loads(token, salt='reset-password', max_age=3600)
     except SignatureExpired:
         flash("Reset link expired.", "danger")
+        session.pop('reset_token', None)
         return redirect(url_for('cover'))
     except BadSignature:
         flash("Invalid reset link.", "danger")
+        session.pop('reset_token', None)
         return redirect(url_for('cover'))
 
     if request.method == 'POST':
@@ -395,10 +397,11 @@ def reset_password_modal(token):
         cursor.close()
         conn.close()
 
+        session.pop('reset_token', None)
         flash("Password reset successful! You can now log in.", "success")
         return redirect(url_for('cover'))
 
-    # Show modal on cover page
+    # GET request, show modal
     session['reset_token'] = token
     return redirect(url_for('cover', show='resetModal'))
 
