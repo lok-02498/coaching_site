@@ -1,5 +1,7 @@
 from flask_bcrypt import Bcrypt
 from colorama import Cursor
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
+
 from flask import Flask, request, redirect, flash, render_template, session, url_for, make_response, send_file
 from flask_mail import Mail, Message
 from xhtml2pdf import pisa
@@ -12,7 +14,8 @@ import random
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
-bcrypt = Bcrypt(app)  # Use a strong secret key
+bcrypt = Bcrypt(app) 
+serializer = URLSafeTimedSerializer(app.secret_key) # Use a strong secret key
 
 # ---------- Flask-Mail Configuration ----------
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -244,8 +247,6 @@ def login_admin():
         flash('Invalid admin credentials', 'error')
         return redirect(url_for('cover'))
 
-import uuid
-
 @app.route('/signup/student', methods=['POST'])
 def signup_student():
     username = request.form['username']
@@ -262,38 +263,50 @@ def signup_student():
         return redirect(url_for('cover'))
 
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    token = str(uuid.uuid4())  # Unique token
-
+    
+    # Don't store token in DB anymore
     cursor.execute("""
-        INSERT INTO users (username, password, email, role, is_verified, verification_token)
-        VALUES (%s, %s, %s, 'student', FALSE, %s)
-    """, (username, hashed_password, email, token))
+        INSERT INTO users (username, password, email, role, is_verified)
+        VALUES (%s, %s, %s, 'student', FALSE)
+    """, (username, hashed_password, email))
     conn.commit()
 
-    # Send verification email
+    # Generate secure token from email
+    token = serializer.dumps(email, salt='email-confirm')
     verify_url = url_for('verify_email', token=token, _external=True)
+
+    # Send the email
     msg = Message("Verify Your Email", recipients=[email])
-    msg.body = f"Hi {username},\n\nPlease click the link to verify your email: {verify_url}"
+    msg.body = f"Hi {username},\n\nPlease verify your email by clicking this link:\n{verify_url}\n\nThis link will expire in 1 hour."
     mail.send(msg)
 
-    flash('Signup successful. Please verify your email.', 'success')
+    flash('Signup successful. Please verify your email using the link sent.', 'success')
     cursor.close()
     conn.close()
     return redirect(url_for('cover'))
+
 
 @app.route('/verify/<token>')
 def verify_email(token):
+    try:
+        email = serializer.loads(token, salt='email-confirm', max_age=3600)  # valid for 1 hour
+    except SignatureExpired:
+        flash("Verification link has expired.", "danger")
+        return redirect(url_for('cover'))
+    except BadSignature:
+        flash("Invalid verification link.", "danger")
+        return redirect(url_for('cover'))
+
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("UPDATE users SET is_verified = TRUE, verification_token = NULL WHERE verification_token = %s", (token,))
+    cursor.execute("UPDATE users SET is_verified = TRUE WHERE email = %s", (email,))
     conn.commit()
-    if cursor.rowcount > 0:
-        flash('Email verified successfully. You can now log in.', 'success')
-    else:
-        flash('Invalid or expired verification link.', 'danger')
     cursor.close()
     conn.close()
+
+    flash("Email verified successfully! You may now log in.", "success")
     return redirect(url_for('cover'))
+
 
 
 
@@ -336,6 +349,8 @@ def verify_email_otp():
 @app.route('/verify-email-otp')
 def verify_email_otp_page():
     return redirect(url_for('cover'))
+
+
 
 
 

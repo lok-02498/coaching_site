@@ -432,14 +432,12 @@ header nav a:hover {
     }
 
     .course-card {
-  background: rgba(242, 239, 239, 0.1); /* translucent */
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px); /* for Safari */
+  background: rgb(241, 237, 237,0.8); 
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: #dad7d7;
+  color: #2a02f0;
 }
 
 
