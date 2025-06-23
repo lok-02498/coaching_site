@@ -362,16 +362,19 @@ def forgot_password():
 
         if user:
             token = serializer.dumps(email, salt='reset-password')
-            reset_url = url_for('reset_password', token=token, _external=True)
+            reset_url = url_for('reset_password_modal', token=token, _external=True)
             msg = Message("Reset Your Password", recipients=[email])
             msg.body = f"Hi,\n\nClick the link below to reset your password:\n{reset_url}\n\nThis link is valid for 1 hour."
             mail.send(msg)
             flash('Password reset link sent to your email.', 'success')
         else:
             flash('Email not found.', 'danger')
-    return render_template('forgot_password.html')
-@app.route('/reset-password/<token>', methods=['GET', 'POST'])
-def reset_password(token):
+
+    # Redirect back to cover and open forgot password modal
+    return redirect(url_for('cover', show='forgotPasswordModal'))
+
+@app.route('/reset-password-modal/<token>', methods=['GET', 'POST'])
+def reset_password_modal(token):
     try:
         email = serializer.loads(token, salt='reset-password', max_age=3600)
     except SignatureExpired:
@@ -382,18 +385,23 @@ def reset_password(token):
         return redirect(url_for('cover'))
 
     if request.method == 'POST':
-        new_password = request.form['password']
-        hashed = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        password = request.form['password']
+        hashed = bcrypt.generate_password_hash(password).decode('utf-8')
+
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("UPDATE users SET password = %s WHERE email = %s", (hashed, email))
         conn.commit()
         cursor.close()
         conn.close()
-        flash('Password reset successful! You can now log in.', 'success')
+
+        flash("Password reset successful! You can now log in.", "success")
         return redirect(url_for('cover'))
 
-    return render_template('reset_password.html', token=token)
+    # Show modal on cover page
+    session['reset_token'] = token
+    return redirect(url_for('cover', show='resetModal'))
+
 
 
 
