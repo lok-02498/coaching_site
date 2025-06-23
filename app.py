@@ -217,7 +217,7 @@ def login_student():
     cursor.close()
     conn.close()
 
-    if user and bcrypt.check_password_hash(user['password'], password):
+    if user and user['is_verified'] and bcrypt.check_password_hash(user['password'], password):
         session['username'] = user['username']
         session['role'] = user['role']
         flash('Student login successful', 'success')
@@ -238,7 +238,7 @@ def login_admin():
     cursor.close()
     conn.close()
 
-    if user and bcrypt.check_password_hash(user['password'], password):
+    if user and user['is_verified'] and bcrypt.check_password_hash(user['password'], password):
         session['username'] = user['username']
         session['role'] = user['role']
         flash('Admin login successful', 'success')
@@ -349,6 +349,52 @@ def verify_email_otp():
 @app.route('/verify-email-otp')
 def verify_email_otp_page():
     return redirect(url_for('cover'))
+@app.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form['email']
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user = cursor.fetchone()
+        cursor.close()
+        conn.close()
+
+        if user:
+            token = serializer.dumps(email, salt='reset-password')
+            reset_url = url_for('reset_password', token=token, _external=True)
+            msg = Message("Reset Your Password", recipients=[email])
+            msg.body = f"Hi,\n\nClick the link below to reset your password:\n{reset_url}\n\nThis link is valid for 1 hour."
+            mail.send(msg)
+            flash('Password reset link sent to your email.', 'success')
+        else:
+            flash('Email not found.', 'danger')
+    return render_template('forgot_password.html')
+@app.route('/reset-password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    try:
+        email = serializer.loads(token, salt='reset-password', max_age=3600)
+    except SignatureExpired:
+        flash("Reset link expired.", "danger")
+        return redirect(url_for('cover'))
+    except BadSignature:
+        flash("Invalid reset link.", "danger")
+        return redirect(url_for('cover'))
+
+    if request.method == 'POST':
+        new_password = request.form['password']
+        hashed = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE users SET password = %s WHERE email = %s", (hashed, email))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        flash('Password reset successful! You can now log in.', 'success')
+        return redirect(url_for('cover'))
+
+    return render_template('reset_password.html', token=token)
+
 
 
 
