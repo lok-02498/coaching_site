@@ -95,7 +95,8 @@
     <main>
       <img src="{{ url_for('static', filename='images/cleaned_logo.png') }}" alt="Logo" class="me-3" style="height: 80px;">
       <h1 class="display-4 glowing-text">Welcome to OM INFO SOLUTIONS</h1>
-      <p class="lead mt-3">Empowering your future with quality education and skills.</p>
+      <p class="lead mt-3"><b> The Institute was established in year 2009 under “Om Info Education Society (Regd. By NCT of Delhi, Regd No. 65566/09) to cater the demands of IT skilled workforce and to support Skill India Mission. The institute runs in the name of “OM INFO SOLUTIONS”, “OIS” with its head office at Delhi. The society works on No profit No loss basis with a view to spread computer awareness in every corner of our country.
+Placement Facilities: The institute has link with MNCs and business houses which help to provide job to the deserving students with desired posts.</b></p>
       <p class="lead">
         <a href="/home" class="btn btn-lg btn-light fw-bold border-white bg-white text-dark mt-3 glow-button">Get Started</a>
       </p>
@@ -185,7 +186,9 @@
           <div class="tab-pane fade show active" id="studentSignup" role="tabpanel">
             <form method="POST" action="/signup/student">
               <input type="text" name="username" placeholder="Student Username" required class="form-control mb-2">
-              <input type="password" name="password" placeholder="Password" required class="form-control mb-2">
+               <input type="email" name="email" placeholder="Email Address" required class="form-control mb-2">
+                <input type="password" name="password" placeholder="Password" required class="form-control mb-2">
+
               <button type="submit" class="btn btn-primary w-100">Signup as Student</button>
             </form>
             <p class="mt-3">Already have an account? 

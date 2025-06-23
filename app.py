@@ -2,7 +2,6 @@ from flask_bcrypt import Bcrypt
 from colorama import Cursor
 from flask import Flask, request, redirect, flash, render_template, session, url_for, make_response, send_file
 from flask_mail import Mail, Message
-from psutil import users
 from xhtml2pdf import pisa
 from werkzeug.utils import secure_filename
 import os
@@ -245,32 +244,57 @@ def login_admin():
         flash('Invalid admin credentials', 'error')
         return redirect(url_for('cover'))
 
+import uuid
 
 @app.route('/signup/student', methods=['POST'])
 def signup_student():
     username = request.form['username']
     password = request.form['password']
+    email = request.form['email']
 
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+
+    # Check if user already exists
+    cursor.execute("SELECT * FROM users WHERE username = %s OR email = %s", (username, email))
     if cursor.fetchone():
-        flash('Username already exists', 'error')
-        cursor.close()
-        conn.close()
+        flash('Username or email already exists', 'error')
         return redirect(url_for('cover'))
 
     hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    cursor.execute("INSERT INTO users (username, password, role) VALUES (%s, %s, 'student')",
-                   (username, hashed_password))
+    token = str(uuid.uuid4())  # Unique token
+
+    cursor.execute("""
+        INSERT INTO users (username, password, email, role, is_verified, verification_token)
+        VALUES (%s, %s, %s, 'student', FALSE, %s)
+    """, (username, hashed_password, email, token))
     conn.commit()
+
+    # Send verification email
+    verify_url = url_for('verify_email', token=token, _external=True)
+    msg = Message("Verify Your Email", recipients=[email])
+    msg.body = f"Hi {username},\n\nPlease click the link to verify your email: {verify_url}"
+    mail.send(msg)
+
+    flash('Signup successful. Please verify your email.', 'success')
     cursor.close()
     conn.close()
-
-    session['username'] = username
-    session['role'] = 'student'
-    flash('Signup successful as student', 'success')
     return redirect(url_for('cover'))
+
+@app.route('/verify/<token>')
+def verify_email(token):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE users SET is_verified = TRUE, verification_token = NULL WHERE verification_token = %s", (token,))
+    conn.commit()
+    if cursor.rowcount > 0:
+        flash('Email verified successfully. You can now log in.', 'success')
+    else:
+        flash('Invalid or expired verification link.', 'danger')
+    cursor.close()
+    conn.close()
+    return redirect(url_for('cover'))
+
 
 
 
