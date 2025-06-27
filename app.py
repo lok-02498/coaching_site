@@ -136,7 +136,18 @@ def submit_contact():
     message = request.form['message']
 
     try:
-        # Email to admin
+        # Store the contact form submission in database
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO contacts (name, email, phone, message)
+            VALUES (%s, %s, %s, %s)
+        """, (name, email, phone, message))
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        # Send confirmation email to admin
         msg_to_admin = Message(
             subject=f'New Contact Form Submission from {name}',
             recipients=['support4ois@gmail.com']
@@ -154,10 +165,11 @@ def submit_contact():
 
         flash('Your message has been sent successfully!', 'success')
     except Exception as e:
-        print(f"Mail error: {e}")
+        print(f"Mail/DB error: {e}")
         flash('There was an error sending your message. Please try again later.', 'danger')
 
     return redirect('/contact')
+
 
 
 from flask import flash, redirect, url_for, session, render_template
@@ -198,12 +210,7 @@ def submit_feedback():
     conn.close()
     flash('Thank you for your feedback!', 'success')
     return redirect('/review')
-@app.route('/dashboard')
-def dashboard():
-    if 'username' not in session or session.get('role') != 'admin':
-        flash("Access denied. Admins only.", "error")
-        return redirect(url_for('cover'))
-    return render_template('admin_dashboard.html')
+
 
 @app.route('/login/student', methods=['POST'])
 def login_student():
@@ -404,6 +411,192 @@ def reset_password_modal(token):
     # GET request, show modal
     session['reset_token'] = token
     return redirect(url_for('cover', show='resetModal'))
+from flask import request
+
+@app.route('/admin/manage-courses')
+def manage_courses():
+    if 'username' not in session or session.get('role') != 'admin':
+        flash("Admins only!", "danger")
+        return redirect(url_for('cover'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM courses")
+    courses = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template('manage_courses.html', courses=courses)
+
+
+@app.route('/admin/add-course', methods=['POST'])
+def add_course():
+    if 'username' not in session or session.get('role') != 'admin':
+        flash("Admins only!", "danger")
+        return redirect(url_for('cover'))
+
+    title = request.form['title']
+    slug = request.form['slug']
+    description = request.form['description']
+    duration = request.form['duration']
+    level = request.form['level']
+    fee = request.form['fee']
+    image_url = request.form['image_url']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO courses (title, slug, description, duration, level, fee, image_url)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (title, slug, description, duration, level, fee, image_url))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    flash('Course added successfully!', 'success')
+    return redirect(url_for('manage_courses'))
+
+
+
+@app.route('/admin/update-course/<int:course_id>', methods=['POST'])
+def update_course(course_id):
+    if 'username' not in session or session.get('role') != 'admin':
+        flash("Admins only!", "danger")
+        return redirect(url_for('cover'))
+
+    title = request.form['title']
+    slug = request.form['slug']
+    description = request.form['description']
+    duration = request.form['duration']
+    level = request.form['level']
+    fee = request.form['fee']
+    image_url = request.form['image_url']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE courses SET title=%s, slug=%s, description=%s, duration=%s, level=%s, fee=%s, image_url=%s
+        WHERE id=%s
+    """, (title, slug, description, duration, level, fee, image_url, course_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    flash('Course updated successfully!', 'success')
+    return redirect(url_for('manage_courses'))
+
+
+
+@app.route('/admin/delete-course/<int:course_id>', methods=['POST'])
+def delete_course(course_id):
+    if 'username' not in session or session.get('role') != 'admin':
+        flash("Admins only!", "danger")
+        return redirect(url_for('cover'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM courses WHERE id=%s", (course_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    flash('Course deleted.', 'success')
+    return redirect(url_for('manage_courses'))
+
+@app.route('/admin/contacts')
+def admin_contacts():
+    if 'username' not in session or session.get('role') != 'admin':
+        flash("Admins only!", "danger")
+        return redirect(url_for('cover'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM contacts ORDER BY created_at DESC")
+    contacts = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return render_template('admin_contacts.html', contacts=contacts)
+
+@app.route('/admin/users')
+def admin_users():
+    if 'username' not in session or session.get('role') != 'admin':
+        flash("Access denied", "danger")
+        return redirect(url_for('cover'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT id, username, email, role, is_verified FROM users ORDER BY id DESC")
+    users = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return render_template('admin_users.html', users=users)
+@app.route('/admin/update-user/<int:user_id>', methods=['POST'])
+def update_user(user_id):
+    if 'username' not in session or session.get('role') != 'admin':
+        flash("Access denied", "danger")
+        return redirect(url_for('cover'))
+
+    username = request.form['username']
+    email = request.form['email']
+    role = request.form['role']
+    is_verified = 1 if request.form.get('is_verified') == 'on' else 0
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE users 
+        SET username=%s, email=%s, role=%s, is_verified=%s 
+        WHERE id=%s
+    """, (username, email, role, is_verified, user_id))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    flash("User updated successfully", "success")
+    return redirect(url_for('admin_users'))
+
+
+@app.route('/admin/delete-user/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    if 'username' not in session or session.get('role') != 'admin':
+        flash("Access denied", "danger")
+        return redirect(url_for('cover'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+    conn.commit()
+    cursor.close()
+    conn.close()
+    flash("User deleted successfully", "success")
+    return redirect(url_for('admin_users'))
+
+@app.route('/dashboard')
+def dashboard():
+    if 'username' not in session or session.get('role') != 'admin':
+        flash("Access denied. Admins only.", "error")
+        return redirect(url_for('cover'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT COUNT(*) AS total_users FROM users")
+    total_users = cursor.fetchone()['total_users']
+
+    cursor.execute("SELECT COUNT(*) AS total_courses FROM courses")
+    total_courses = cursor.fetchone()['total_courses']
+
+    cursor.execute("SELECT COUNT(*) AS total_feedbacks FROM feedbacks")
+    total_feedbacks = cursor.fetchone()['total_feedbacks']
+
+    cursor.close()
+    conn.close()
+
+    return render_template('admin_dashboard.html',
+                           total_users=total_users,
+                           total_courses=total_courses,
+                           total_feedbacks=total_feedbacks)
+
+
+
+
 
 
 
